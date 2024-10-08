@@ -8,6 +8,9 @@
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { routes } from 'vue-router/auto-routes'
+console.log(routes); // Agrega este console.log para ver las rutas generadas
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
