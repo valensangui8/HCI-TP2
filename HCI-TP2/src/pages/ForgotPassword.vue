@@ -1,0 +1,95 @@
+<template>
+    <div class="forgot-password-page">
+      <div class="forgot-password-form-container">
+        <AuthForm
+          title="Recuperar Contraseña"
+          description="Ingresá el correo electrónico asociado a la cuenta y la nueva contraseña para reiniciar tu contraseña."
+          :fields="fields"
+          buttonText="Siguiente"
+          @submit="handleForgotPassword"
+        >
+          <!-- Enlace adicional debajo del formulario -->
+          <template #links>
+            <div class="forgot-links">
+              <router-link to="/contact-support" class="support-link">Perdí acceso al correo</router-link>
+            </div>
+          </template>
+        </AuthForm>
+      </div>
+  
+      <div class="forgot-password-image">
+        <img src="@/assets/LoginImage.png" alt="Forgot Password Image" />
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  import AuthForm from '@/components/AuthForm.vue';
+  
+  export default {
+    name: 'ForgotPassword',
+    components: {
+      AuthForm,
+    },
+    data() {
+      return {
+        fields: [
+          { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' },
+          { name: 'newPassword', type: 'password', label: 'Nueva Contraseña', placeholder: 'Ingresa tu nueva contraseña' },
+          { name: 'confirmPassword', type: 'password', label: 'Confirmar Nueva Contraseña', placeholder: 'Confirma tu nueva contraseña' },
+        ],
+      };
+    },
+    methods: {
+      handleForgotPassword(formData) {
+        console.log('Datos de recuperación:', formData);
+      },
+    },
+  };
+  </script>
+  
+  <style scoped>
+  .forgot-password-page {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .forgot-password-form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Centra horizontalmente el formulario */
+    padding: 0 40px;
+    background-color: white;
+  }
+  
+  .forgot-password-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0a1a1a;
+  }
+  
+  .forgot-password-image img {
+    max-width: 80%;
+    height: auto;
+  }
+  
+  .forgot-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .support-link {
+    color: #28a745;
+    text-decoration: none;
+  }
+  
+  .support-link:hover {
+    text-decoration: underline;
+  }
+  </style>
+  

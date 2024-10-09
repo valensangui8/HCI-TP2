@@ -1,7 +1,7 @@
 <template>
     <section class="hero">
       <h1>Ahora podés <span>confiar</span>, tu dinero está en la <span>Urna</span>.</h1>
-      <button class="cta-btn">Comenzar</button>
+      <router-link to="/register" class="cta-btn">Comenzar</router-link>
     </section>
   </template>
   
@@ -21,10 +21,12 @@
   
   .hero h1 {
     font-size: 2.5rem;
+    margin-bottom: 35px;
   }
   
   .hero h1 span {
     color: #f9a825; /* Color amarillo para resaltar palabras */
+
   }
   
   .cta-btn {
@@ -35,6 +37,7 @@
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
+    text-decoration: none;
   }
   </style>
   

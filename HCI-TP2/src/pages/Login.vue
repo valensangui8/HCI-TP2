@@ -1,59 +1,47 @@
 <template>
   <div class="login-page">
     <div class="login-form-container">
-      <h1>Inicio de Sesión</h1>
-      <form class="login-form">
-        <label for="email">Correo Electrónico</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="Correo Electrónico"
-          v-model="email"
-          @input="checkInput('email')"
-          :class="{ filled: email }"
-        />
-
-        <label for="password">Contraseña</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Contraseña"
-          v-model="password"
-          @input="checkInput('password')"
-          :class="{ filled: password }"
-        />
-
-        <div class="actions">
-          <p><span>¿No tenés cuenta?</span> <router-link to="/Register">¡Registrate!</router-link></p>
-
-
-          <a href="#">Olvidé mi Contraseña</a>
-        </div>
-
-        <button type="submit" class="btn-login">Iniciar Sesión</button>
-      </form>
-
-      <router-link to="/" class="back-link"> <span>Volver para atrás</span></router-link>
+      <AuthForm
+        title="Iniciar Sesión"
+        :fields="fields"
+        buttonText="Iniciar Sesión"
+        @submit="handleLogin"
+      >
+        <!-- Enlaces dentro del slot llamado "links" -->
+        <template #links>
+          <div class="login-links">
+            <router-link to="/register" class="register-link">¿No tenés cuenta? ¡Registrate!</router-link>
+            <router-link to="/forgot-password" class="forgot-link">Olvidé mi contraseña</router-link>
+          </div>
+        </template>
+      </AuthForm>
     </div>
 
     <div class="login-image">
-      <img src="@/assets/LoginImage.png" alt="Login image" />
+      <img src="@/assets/LoginImage.png" alt="Login Image" />
     </div>
   </div>
 </template>
 
 <script>
+import AuthForm from '@/components/AuthForm.vue';
+
 export default {
   name: 'Login',
+  components: {
+    AuthForm,
+  },
   data() {
     return {
-      email: '',
-      password: '',
+      fields: [
+        { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' },
+        { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' },
+      ],
     };
   },
   methods: {
-    checkInput(field) {
-      // Aquí podrías hacer validaciones o lógica adicional si fuera necesario
+    handleLogin(formData) {
+      console.log('Datos de login:', formData);
     },
   },
 };
@@ -70,73 +58,31 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center; /* Centra horizontalmente el formulario */
   padding: 0 40px;
   background-color: white;
 }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: black;
-}
 
-.login-form {
+
+.login-links {
   display: flex;
-  flex-direction: column;
-}
-
-.login-form label {
-  margin-bottom: 5px;
-  font-size: 1rem;
-}
-
-.login-form input {
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 20px;
-  border: 1px solid #000000;
+  justify-content: space-between; /* Alinea los enlaces a la izquierda y derecha */
   width: 100%;
-  font-size: 1rem;
-  color: black; /* Color por defecto */
+  margin-top: 10px;
+  font-size: 0.9rem; /* Reduce el tamaño de la fuente */
 }
 
-.login-form input:focus {
-  font-weight: bold;
-  color: black;
-}
-
-.login-form input.filled {
-  font-weight: bold;
-  color: black;
-}
-
-.actions {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.actions a {
-  font-size: 0.9rem;
-  color: #28a745;
+.register-link, .forgot-link {
+  color: #2604ff;
   text-decoration: none;
+  font-size: 0.9rem; /* Reduce el tamaño de los links */
 }
 
-
-.actions p span {
-  color: black;
-  font-weight: bold;
+.register-link:hover, .forgot-link:hover {
+  text-decoration: underline; /* Opcional: subrayado al pasar el cursor */
 }
 
-.btn-login {
-  padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 1rem;
-}
 
 .login-image {
   flex: 1;
@@ -150,12 +96,4 @@ h1 {
   max-width: 80%;
   height: auto;
 }
-
-.back-link {
-    color: #000000;
-    text-decoration: underline;
-    font-size: 0.9rem;
-    text-align: center;
-    margin-top: 20px;
-  }
 </style>
