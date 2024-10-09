@@ -6,7 +6,7 @@
         </router-link>
       </div>
       <!-- Mostrar los botones solo si "simple" es false -->
-      <div class="actions" v-if="!simple">
+      <div class="actions">
         <router-link to="/Login" class="btn">Iniciar Sesión</router-link>
         <router-link to="/Register" class="btn">Registrarse</router-link>
       </div>
