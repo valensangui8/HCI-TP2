@@ -1,17 +1,26 @@
 <template>
     <div class="investment-summary">
-      <h3>Resumen Inversiones</h3>
-      <div class="net-gains">
-        <p>Tus Ganancias Netas</p>
-        <h2>{{ netGains }}</h2>
-        <button @click="invest">Invertir</button>
+      <div class="summary-container">
+        <!-- Ganancias netas (40% del espacio) -->
+        <div class="net-gains">
+          <p>Tus Ganancias Netas</p>
+          <h2>{{ netGains }}</h2>
+          <button @click="invest">Invertir</button>
+        </div>
+        
+        <!-- Gráfico (60% del espacio) -->
+        <div class="chart-container">
+          <canvas id="investmentChart"></canvas>
+        </div>
       </div>
-      <canvas id="investmentChart"></canvas>
     </div>
   </template>
   
   <script>
-  import { Chart } from 'chart.js';
+  import { Chart, registerables } from 'chart.js';
+  
+  // Registrar todos los componentes necesarios de Chart.js
+  Chart.register(...registerables);
   
   export default {
     name: 'InvestmentSummary',
@@ -42,6 +51,7 @@
           },
           options: {
             responsive: true,
+            maintainAspectRatio: false, // Permite controlar la altura del gráfico
             scales: {
               y: {
                 beginAtZero: false,
@@ -52,7 +62,7 @@
       },
     },
     mounted() {
-      this.createChart();
+      this.createChart(); // Crear el gráfico al montar el componente
     },
   };
   </script>
@@ -63,12 +73,30 @@
     color: white;
     padding: 20px;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-grow: 2;
   }
   
+  .summary-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
   .net-gains {
-    
-    margin-bottom: 20px;
+    width: 40%; /* 40% del contenedor */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-right: 20px; /* Separación entre el gráfico y las ganancias */
+  }
+  
+  .net-gains p {
+    margin: 0;
   }
   
   button {
@@ -79,10 +107,16 @@
     padding: 10px 20px;
     cursor: pointer;
     font-size: 1rem;
+    margin-top: 10px;
+  }
+  
+  .chart-container {
+    width: 60%; /* 60% del contenedor */
   }
   
   canvas {
-    margin-top: 20px;
+    width: 100%;
+    height: 200px; /* Ajuste de la altura del gráfico */
   }
   </style>
   

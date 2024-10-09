@@ -42,6 +42,7 @@ export default {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .additional-content {

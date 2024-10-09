@@ -9,11 +9,12 @@
         <router-link to="/cards">Tus Tarjetas</router-link>
         <router-link to="/investments">Inversiones</router-link>
         <router-link to="/settings">Configuración</router-link>
-        <router-link to="/logout">Cerrar Sesión</router-link>
+        <router-link to="/">Cerrar Sesión</router-link>
       </div>
       <div class="navbar-profile">
         <router-link to="/profile">
-          <img src="@/assets/profile-icon.png" alt="Profile Icon" />
+            <span class="username">Hola, James Bond</span>
+            <img src="@/assets/profile-icon.png" alt="Profile Icon" />
         </router-link>
       </div>
     </nav>
@@ -56,6 +57,19 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
+    text-decoration: none;
   }
+
+  .navbar-profile span {
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+
+  username{
+    text-decoration: none;
+  }
+ 
   </style>
   
