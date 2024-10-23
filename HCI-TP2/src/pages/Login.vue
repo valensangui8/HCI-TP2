@@ -41,7 +41,11 @@ export default {
   },
   methods: {
     handleLogin(formData) {
-      console.log('Datos de login:', formData);
+      
+       // Aquí puedes validar los datos ingresados o hacer una petición de autenticación.
+      
+      // Redireccionar a /dashboard si los datos son válidos
+      this.$router.push('/dashboard');
     },
   },
 };

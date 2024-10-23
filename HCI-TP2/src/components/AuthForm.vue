@@ -29,47 +29,24 @@
     </form>
   </template>
   
-  <script>
-  export default {
-    name: 'AuthForm',
-    props: {
-      title: {
-        type: String,
-        required: true,
-      },
-      description: {
-        type: String,
-        default: '',
-      },
-      fields: {
-        type: Array,
-        required: true,
-      },
-      buttonText: {
-        type: String,
-        default: 'Enviar',
-      },
-    },
-    data() {
-      return {
-        formData: {}, // Inicializa los datos del formulario
-      };
-    },
-    created() {
-      // Inicializa formData con los campos recibidos en props
-      this.formData = this.fields.reduce((acc, field) => {
-        acc[field.name] = ''; // Inicializa cada campo en blanco
-        return acc;
-      }, {});
-    },
-    methods: {
-      handleSubmit() {
-        // Emite un evento con los datos del formulario
-        this.$emit('submit', this.formData);
-      },
-    },
-  };
-  </script>
+  <script setup>
+import { ref } from 'vue';
+import AuthForm from  '@/components/AuthForm.vue';
+
+// Definimos los campos usando ref
+const fields = ref([
+  { name: 'name', type: 'text', label: 'Nombre', placeholder: 'Ingresa tu nombre' },
+  { name: 'lastName', type: 'text', label: 'Apellido', placeholder: 'Ingresa tu apellido' },
+  { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' },
+  { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' },
+]);
+
+// Manejamos el evento de registro
+const handleRegister = (formData) => {
+  console.log('Datos de registro:', formData);
+};
+</script>
+
   
   <style scoped>
   .auth-form {

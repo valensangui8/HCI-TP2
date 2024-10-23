@@ -26,34 +26,26 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
 import AuthForm from '@/components/AuthForm.vue';
 
-export default {
-  name: 'Register',
-  components: {
-    AuthForm,
-  },
-  data() {
-    return {
-      fields: [
-        { name: 'name', type: 'text', label: 'Nombre', placeholder: 'Ingresa tu nombre' },
-        { name: 'lastName', type: 'text', label: 'Apellido', placeholder: 'Ingresa tu apellido' },
-        { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' },
-        { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' },
-      ],
-    };
-  },
-  methods: {
-    handleRegister(formData) {
-      console.log('Datos de registro:', formData);
-    },
-  },
+// Definimos los campos usando ref
+const fields = ref([
+  { name: 'name', type: 'text', label: 'Nombre', placeholder: 'Ingresa tu nombre' },
+  { name: 'lastName', type: 'text', label: 'Apellido', placeholder: 'Ingresa tu apellido' },
+  { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' },
+  { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' },
+]);
+
+// Manejamos el evento de registro
+const handleRegister = (formData) => {
+  console.log('Datos de registro:', formData);
 };
 </script>
 
 
-<style>
+<style scoped>
 .register-page {
   display: flex;
   min-height: 100vh;
