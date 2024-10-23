@@ -7,11 +7,10 @@
         buttonText="Iniciar Sesión"
         @submit="handleLogin"
       >
-        <!-- Enlaces dentro del slot llamado "links" -->
         <template #links>
           <div class="login-links">
             <router-link to="/register" class="register-link">¿No tenés cuenta? ¡Registrate!</router-link>
-            <router-link to="/forgot-password" class="forgot-link">Olvidé mi contraseña</router-link>
+            <router-link to="/ForgotPassword" class="forgot-link">Olvidé mi contraseña</router-link>
           </div>
         </template>
       </AuthForm>
@@ -23,31 +22,24 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import AuthForm from '@/components/AuthForm.vue';
 
-export default {
-  name: 'Login',
-  components: {
-    AuthForm,
-  },
-  data() {
-    return {
-      fields: [
-        { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' },
-        { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' },
-      ],
-    };
-  },
-  methods: {
-    handleLogin(formData) {
-      
-       // Aquí puedes validar los datos ingresados o hacer una petición de autenticación.
-      
-      // Redireccionar a /dashboard si los datos son válidos
-      this.$router.push('/dashboard');
-    },
-  },
+const router = useRouter();
+
+// Campos del formulario
+const fields = ref([
+  { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' },
+  { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' },
+]);
+
+// Manejamos el evento de login
+const handleLogin = (formData) => {
+  console.log('Datos de login:', formData);
+  // Simulamos un login exitoso y redirigimos al dashboard
+  router.push('/dashboard');
 };
 </script>
 
@@ -62,31 +54,27 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* Centra horizontalmente el formulario */
+  align-items: center;
   padding: 0 40px;
   background-color: white;
 }
 
-
-
 .login-links {
   display: flex;
-  justify-content: space-between; /* Alinea los enlaces a la izquierda y derecha */
+  justify-content: space-between;
   width: 100%;
   margin-top: 10px;
-  font-size: 0.9rem; /* Reduce el tamaño de la fuente */
+  font-size: 0.9rem;
 }
 
 .register-link, .forgot-link {
   color: #2604ff;
   text-decoration: none;
-  font-size: 0.9rem; /* Reduce el tamaño de los links */
 }
 
 .register-link:hover, .forgot-link:hover {
-  text-decoration: underline; /* Opcional: subrayado al pasar el cursor */
+  text-decoration: underline;
 }
-
 
 .login-image {
   flex: 1;

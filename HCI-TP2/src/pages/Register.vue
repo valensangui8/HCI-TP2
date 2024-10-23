@@ -8,7 +8,6 @@
         buttonText="Registrar"
         @submit="handleRegister"
       >
-        <!-- Texto adicional debajo del título -->
         <template #links>
           <p class="register-description">
             Al registrarte, aceptas nuestros Términos de Servicio y Política de Privacidad.
@@ -30,7 +29,6 @@
 import { ref } from 'vue';
 import AuthForm from '@/components/AuthForm.vue';
 
-// Definimos los campos usando ref
 const fields = ref([
   { name: 'name', type: 'text', label: 'Nombre', placeholder: 'Ingresa tu nombre' },
   { name: 'lastName', type: 'text', label: 'Apellido', placeholder: 'Ingresa tu apellido' },
@@ -38,12 +36,10 @@ const fields = ref([
   { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' },
 ]);
 
-// Manejamos el evento de registro
 const handleRegister = (formData) => {
   console.log('Datos de registro:', formData);
 };
 </script>
-
 
 <style scoped>
 .register-page {
@@ -89,7 +85,6 @@ const handleRegister = (formData) => {
   justify-content: space-between;
   width: 100%;
   margin-top: 10px;
-  font-size: 0.9rem;
 }
 
 .register-image {
@@ -104,5 +99,4 @@ const handleRegister = (formData) => {
   max-width: 80%;
   height: auto;
 }
-
 </style>

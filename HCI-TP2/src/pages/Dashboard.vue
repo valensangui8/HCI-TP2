@@ -12,23 +12,13 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import Navbar from '@/components/Navbar.vue';
 import BalanceCards from '@/components/BalanceCards.vue';
 import CreditCard from '@/components/CreditCard.vue';
 import InvestmentSummary from '@/components/InvestmentSummary.vue';
 import TransactionHistory from '@/components/TransactionHistory.vue';
 
-export default {
-  name: 'Dashboard',
-  components: {
-    Navbar,
-    BalanceCards,
-    CreditCard,
-    InvestmentSummary,
-    TransactionHistory,
-  },
-};
 </script>
 
 <style scoped>

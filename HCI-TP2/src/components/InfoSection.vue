@@ -7,10 +7,7 @@
     </section>
   </template>
   
-  <script>
-  export default {
-    name: "InfoSection",
-  };
+  <script setup>
   </script>
   
   <style scoped>

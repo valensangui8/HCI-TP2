@@ -7,10 +7,8 @@
     </section>
   </template>
   
-  <script>
-  export default {
-    name: "MiddleLanding",
-  };
+  <script setup>
+
   </script>
   
   <style scoped>
