@@ -7,7 +7,7 @@
         <CreditCard />
         <InvestmentSummary />
       </div>
-      <TransactionHistory />
+      <TransactionHistory :transactions="transactions" />
     </div>
   </div>
 </template>
@@ -15,19 +15,22 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth';
 import { useUserDataStore } from '@/stores/userData';
+import { useTransactionStore } from '@/stores/transactions';
 import Navbar from '@/components/Navbar.vue';
 import BalanceCards from '@/components/BalanceCards.vue';
 import CreditCard from '@/components/CreditCard.vue';
 import InvestmentSummary from '@/components/InvestmentSummary.vue';
 import TransactionHistory from '@/components/TransactionHistory.vue';
 
-// Acceso a las stores de usuario y autenticación
+
+// Acceso a las stores
 const authStore = useAuthStore();
 const userDataStore = useUserDataStore();
+const transactionStore = useTransactionStore();
 
-// Datos de usuario actual
-const balance = userDataStore.currentBalance;
-const expenses = userDataStore.currentExpenses;
+// Datos de transacciones
+const transactions = transactionStore.transactions;
+
 
 </script>
 

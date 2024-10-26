@@ -19,6 +19,7 @@ declare module 'vue' {
     InfoSection: typeof import('./src/components/InfoSection.vue')['default']
     InvestmentSummary: typeof import('./src/components/InvestmentSummary.vue')['default']
     MiddleLanding: typeof import('./src/components/MiddleLanding.vue')['default']
+    Movements: typeof import('./src/components/movements.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

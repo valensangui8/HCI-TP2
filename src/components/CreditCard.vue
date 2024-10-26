@@ -1,30 +1,27 @@
 <template>
   <div class="credit-card-container">
-    <!-- Si no hay tarjetas, muestra el botón para agregar -->
-    <div v-if="cards.length === 0" class="add-card">
-      <button @click="toggleModal">+ Ingresar Tarjeta</button>
-    </div>
-
-    <!-- Si hay tarjetas, muestra el carrusel con las flechas -->
-    <div v-else class="card-carousel">
+    <div class="card-carousel">
       <button class="nav-arrow left-arrow" @click="prevCard">‹</button>
-      <div class="card" :style="{ backgroundColor: cards[currentCardIndex].color }">
+      <div v-if="isAddCardVisible" class="card add-card">
+        <button @click="toggleModal" class="add-button">+</button>
+        <p class="add-card-text">Agregar Tarjeta</p>
+      </div>
+      <div v-else class="card" :style="{ backgroundColor: currentCard.color }">
         <div class="card-content">
           <div class="card-header">
-            <img src="@/assets/LogoPotty.png" alt="Banco Logo" class="bank-logo">
-            <h4>{{ cards[currentCardIndex].bank }}</h4>
+            <img src="@/assets/LogoPotty.png" alt="Banco Logo" class="bank-logo" />
+            <h4>{{ currentCard.bank }}</h4>
           </div>
-          <div class="card-number">{{ cards[currentCardIndex].number }}</div>
+          <div class="card-number">{{ currentCard.number }}</div>
           <div class="card-footer">
-            <span>{{ cards[currentCardIndex].holder }}</span>
-            <span>{{ cards[currentCardIndex].expiry }}</span>
+            <span>{{ currentCard.holder }}</span>
+            <span>{{ currentCard.expiry }}</span>
           </div>
         </div>
       </div>
       <button class="nav-arrow right-arrow" @click="nextCard">›</button>
     </div>
 
-    <!-- Modal para agregar tarjeta -->
     <AddCardModal :isVisible="isModalVisible" @close="toggleModal" />
   </div>
 </template>
@@ -32,27 +29,28 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useUserCardsStore } from '@/stores/userCards';
-import AddCardModal  from '@/components/addCardModal.vue';
+import AddCardModal from '@/components/addCardModal.vue';
 
 const userCardsStore = useUserCardsStore();
-const cards = computed(() => userCardsStore.cards);
+const userCards = computed(() => userCardsStore.cards);
 const currentCardIndex = ref(0);
 const isModalVisible = ref(false);
 
+const isAddCardVisible = computed(() => currentCardIndex.value >= userCards.value.length);
+const currentCard = computed(() => userCards.value[currentCardIndex.value] || {});
+
 const prevCard = () => {
-  currentCardIndex.value = (currentCardIndex.value - 1 + cards.value.length) % cards.value.length;
+  currentCardIndex.value = (currentCardIndex.value - 1 + userCards.value.length + 1) % (userCards.value.length + 1);
 };
 
 const nextCard = () => {
-  currentCardIndex.value = (currentCardIndex.value + 1) % cards.value.length;
+  currentCardIndex.value = (currentCardIndex.value + 1) % (userCards.value.length + 1);
 };
 
 const toggleModal = () => {
   isModalVisible.value = !isModalVisible.value;
 };
 </script>
-
-
 
 <style scoped>
 .credit-card-container {
@@ -68,6 +66,7 @@ const toggleModal = () => {
 
 .add-card {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 150px;
@@ -75,12 +74,26 @@ const toggleModal = () => {
   border-radius: 10px;
 }
 
-.add-card button {
-  background-color: transparent;
+.add-button {
+  margin-top: auto;
+  background-color: #28a745;
   color: white;
   border: none;
-  font-size: 2rem;
+  font-size: 2.5rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.add-card-text {
+  font-size: 1.2rem;
+  color: #bbb;
+  margin-top: 10px;
 }
 
 .card-carousel {
