@@ -50,18 +50,27 @@
 import { ref, computed } from 'vue';
 import eyeIcon from '@/assets/eye-icon.png';
 import closedEyeIcon from '@/assets/closed-eye-icon.png';
-import { useUserDataStore } from '@/stores/userData';
+import { useAuthStore } from '@/stores/auth.js';
 
-const userDataStore = useUserDataStore();
+const authStore = useAuthStore();
 
 const showBalance = ref(true);
 const toggleBalance = () => {
   showBalance.value = !showBalance.value;
 };
 
-// Datos reactivos desde el store
-const formattedBalance = computed(() => `$${userDataStore.currentBalance.toLocaleString()}`);
-const formattedExpenses = computed(() => `$${userDataStore.currentExpenses.toLocaleString()}`);
+// Obtener balance y gastos del usuario actual
+const formattedBalance = computed(() => {
+  const balance = authStore.currentUser?.balance || 0;
+  return `$${balance.toFixed(2)}`;
+});
+
+console.log(authStore.currentUser.value);
+const formattedExpenses = computed(() => {
+  // Suponiendo que los gastos están en el `authStore` como `currentUser.expenses`
+  const expenses = authStore.currentUser?.expenses || 0;
+  return `$${expenses.toLocaleString()}`;
+});
 </script>
 
 <style scoped>
