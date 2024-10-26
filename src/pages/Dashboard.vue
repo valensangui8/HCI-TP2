@@ -13,11 +13,21 @@
 </template>
 
 <script setup>
+import { useAuthStore } from '@/stores/auth';
+import { useUserDataStore } from '@/stores/userData';
 import Navbar from '@/components/Navbar.vue';
 import BalanceCards from '@/components/BalanceCards.vue';
 import CreditCard from '@/components/CreditCard.vue';
 import InvestmentSummary from '@/components/InvestmentSummary.vue';
 import TransactionHistory from '@/components/TransactionHistory.vue';
+
+// Acceso a las stores de usuario y autenticación
+const authStore = useAuthStore();
+const userDataStore = useUserDataStore();
+
+// Datos de usuario actual
+const balance = userDataStore.currentBalance;
+const expenses = userDataStore.currentExpenses;
 
 </script>
 

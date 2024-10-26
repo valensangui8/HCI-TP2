@@ -7,6 +7,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AddCardModal: typeof import('./src/components/addCardModal.vue')['default']
+    AddCardMoval: typeof import('./src/components/addCardMoval.vue')['default']
     AppFooter: typeof import('./src/components/AppFooter.vue')['default']
     AuthForm: typeof import('./src/components/AuthForm.vue')['default']
     BalanceCards: typeof import('./src/components/BalanceCards.vue')['default']

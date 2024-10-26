@@ -24,6 +24,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useTransactionStore } from '@/stores/transactions';
 
 // Definir los datos usando Composition API
 const transactions = ref([

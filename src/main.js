@@ -1,16 +1,17 @@
-/**
- * main.js
- *
- * Bootstraps Vuetify and other plugins then mounts the App`
- */
+// main.js
+
 import { createApp } from 'vue';
 import App from './App.vue';
-import { registerPlugins } from './plugins'; // Esto incluye vuetify, pinia, router
+import { registerPlugins } from './plugins';
+import { useAuthStore } from '@/stores/auth';
 
 const app = createApp(App);
 
 // Registramos todos los plugins (vuetify, pinia, router)
 registerPlugins(app);
 
-// Montamos la aplicación en el elemento con id #app
+// Cargamos usuarios predefinidos al iniciar la app
+const authStore = useAuthStore();
+authStore.loadFromLocalStorage();
+
 app.mount('#app');

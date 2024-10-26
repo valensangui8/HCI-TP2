@@ -25,9 +25,12 @@
   </div>
 </template>
 
+
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import AuthForm from '@/components/AuthForm.vue';
+import { useAuthStore } from '@/stores/auth';
 
 const fields = ref([
   { name: 'name', type: 'text', label: 'Nombre', placeholder: 'Ingresa tu nombre' },
@@ -36,10 +39,19 @@ const fields = ref([
   { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' },
 ]);
 
+const authStore = useAuthStore();
+const router = useRouter();
+
 const handleRegister = (formData) => {
-  console.log('Datos de registro:', formData);
+  const success = authStore.register(formData);
+  if (success) {
+    router.push('/login');
+  } else {
+    alert('Este correo ya está registrado.');
+  }
 };
 </script>
+
 
 <style scoped>
 .register-page {

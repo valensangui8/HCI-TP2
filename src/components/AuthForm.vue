@@ -3,7 +3,7 @@
     <h1>{{ title }}</h1>
     <h3>{{ description }}</h3>
 
-    <!-- Iterar sobre los campos recibidos en props -->
+    <!-- Campos del formulario -->
     <div v-for="(field, index) in fields" :key="index" class="form-field">
       <label :for="field.name">{{ field.label }}</label>
       <input 
@@ -15,7 +15,6 @@
       />
     </div>
 
-    <!-- Mover los enlaces aquí, antes del botón -->
     <div class="auth-links">
       <slot name="links"></slot>
     </div>
@@ -26,8 +25,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, toRefs } from 'vue';
-import { useRouter } from 'vue-router';
+import { reactive } from 'vue';
 import { defineProps, defineEmits } from 'vue';
 
 // Props y eventos
@@ -41,13 +39,11 @@ const emit = defineEmits(['submit']);
 
 // Variables reactivas
 const formData = reactive({});
-
-// Inicializamos los datos de los campos en blanco
 props.fields.forEach(field => {
   formData[field.name] = '';
 });
 
-// Métodos
+// Emitimos los datos del formulario al componente padre
 const handleSubmit = () => {
   emit('submit', formData);
 };

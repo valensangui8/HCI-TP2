@@ -2,7 +2,7 @@
   <div class="credit-card-container">
     <!-- Si no hay tarjetas, muestra el botón para agregar -->
     <div v-if="cards.length === 0" class="add-card">
-      <button @click="addCard">+ Ingresar Tarjeta</button>
+      <button @click="toggleModal">+ Ingresar Tarjeta</button>
     </div>
 
     <!-- Si hay tarjetas, muestra el carrusel con las flechas -->
@@ -10,14 +10,11 @@
       <button class="nav-arrow left-arrow" @click="prevCard">‹</button>
       <div class="card" :style="{ backgroundColor: cards[currentCardIndex].color }">
         <div class="card-content">
-          <!-- Logo del banco y nombre del banco -->
           <div class="card-header">
             <img src="@/assets/LogoPotty.png" alt="Banco Logo" class="bank-logo">
             <h4>{{ cards[currentCardIndex].bank }}</h4>
           </div>
-          <!-- Número de tarjeta -->
           <div class="card-number">{{ cards[currentCardIndex].number }}</div>
-          <!-- Nombre del titular y fecha de expiración -->
           <div class="card-footer">
             <span>{{ cards[currentCardIndex].holder }}</span>
             <span>{{ cards[currentCardIndex].expiry }}</span>
@@ -26,43 +23,36 @@
       </div>
       <button class="nav-arrow right-arrow" @click="nextCard">›</button>
     </div>
+
+    <!-- Modal para agregar tarjeta -->
+    <AddCardModal :isVisible="isModalVisible" @close="toggleModal" />
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useUserCardsStore } from '@/stores/userCards';
+import AddCardModal  from '@/components/addCardModal.vue';
 
-// Definimos las tarjetas
+const userCardsStore = useUserCardsStore();
+const cards = computed(() => userCardsStore.cards);
 const currentCardIndex = ref(0);
-const cards = ref([
-{ 
-  bank: 'Banco Royale', 
-  number: '0000 0000 0000 0000', 
-  holder: 'James Bond', 
-  expiry: '03/60', 
-  color: '#6a0dad' // Color violeta
-},
-{ 
-  bank: 'Banco Imperial', 
-  number: '1111 1111 1111 1111', 
-  holder: 'James Bond', 
-  expiry: '12/50', 
-  color: '#4B0082' // Color púrpura
-}
-]);
+const isModalVisible = ref(false);
 
-const addCard = () => {
-alert("Función para agregar una tarjeta.");
+const prevCard = () => {
+  currentCardIndex.value = (currentCardIndex.value - 1 + cards.value.length) % cards.value.length;
 };
 
 const nextCard = () => {
-currentCardIndex.value = (currentCardIndex.value + 1) % cards.value.length;
+  currentCardIndex.value = (currentCardIndex.value + 1) % cards.value.length;
 };
 
-const prevCard = () => {
-currentCardIndex.value = (currentCardIndex.value - 1 + cards.value.length) % cards.value.length;
+const toggleModal = () => {
+  isModalVisible.value = !isModalVisible.value;
 };
 </script>
+
+
 
 <style scoped>
 .credit-card-container {
@@ -72,7 +62,7 @@ currentCardIndex.value = (currentCardIndex.value - 1 + cards.value.length) % car
   border-radius: 10px;
   position: relative;
   width: 100%;
-  max-width: 350px; /* Ajustamos el ancho máximo */
+  max-width: 350px;
   text-align: center;
 }
 
@@ -105,14 +95,13 @@ currentCardIndex.value = (currentCardIndex.value - 1 + cards.value.length) % car
   border-radius: 10px;
   width: 100%;
   max-width: 350px;
-  height: 160px; /* Ajustamos la altura */
+  height: 160px;
   text-align: center;
   position: relative;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: white; /* Aseguramos que el texto sea blanco */
 }
 
 .card-header {
@@ -122,7 +111,7 @@ currentCardIndex.value = (currentCardIndex.value - 1 + cards.value.length) % car
 }
 
 .bank-logo {
-  width: 40px; /* Ajustamos el tamaño del logo */
+  width: 40px;
   height: auto;
 }
 
@@ -138,14 +127,10 @@ currentCardIndex.value = (currentCardIndex.value - 1 + cards.value.length) % car
   font-size: 0.9rem;
 }
 
-.card-content h4, .card-content p {
-  margin: 0;
-}
-
 .nav-arrow {
   background: none;
   border: none;
-  color: black; /* Flechas negras */
+  color: black;
   font-size: 1.5rem;
   cursor: pointer;
 }
