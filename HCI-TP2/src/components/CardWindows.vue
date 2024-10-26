@@ -30,39 +30,48 @@
   </template>
   
   <script>
+  import { ref } from 'vue';
+  
   export default {
     name: 'CreditCard',
-    data() {
-      return {
-        currentCardIndex: 0, // Índice para la tarjeta actual
-        cards: [
-          { 
-            bank: 'Banco Royale', 
-            number: '0000 0000 0000 0000', 
-            holder: 'James Bond', 
-            expiry: '03/60', 
-            color: '#6a0dad' // Color violeta
-          },
-          { 
-            bank: 'Banco Imperial', 
-            number: '1111 1111 1111 1111', 
-            holder: 'James Bond', 
-            expiry: '12/50', 
-            color: '#4B0082' // Color púrpura
-          }
-        ],
-      };
-    },
-    methods: {
-      addCard() {
+    setup() {
+      const currentCardIndex = ref(0); // Índice para la tarjeta actual
+      const cards = ref([
+        { 
+          bank: 'Banco Royale', 
+          number: '0000 0000 0000 0000', 
+          holder: 'James Bond', 
+          expiry: '03/60', 
+          color: '#6a0dad' // Color violeta
+        },
+        { 
+          bank: 'Banco Imperial', 
+          number: '1111 1111 1111 1111', 
+          holder: 'James Bond', 
+          expiry: '12/50', 
+          color: '#4B0082' // Color púrpura
+        }
+      ]);
+  
+      const addCard = () => {
         alert("Función para agregar una tarjeta.");
-      },
-      nextCard() {
-        this.currentCardIndex = (this.currentCardIndex + 1) % this.cards.length;
-      },
-      prevCard() {
-        this.currentCardIndex = (this.currentCardIndex - 1 + this.cards.length) % this.cards.length;
-      },
+      };
+  
+      const nextCard = () => {
+        currentCardIndex.value = (currentCardIndex.value + 1) % cards.value.length;
+      };
+  
+      const prevCard = () => {
+        currentCardIndex.value = (currentCardIndex.value - 1 + cards.value.length) % cards.value.length;
+      };
+  
+      return {
+        currentCardIndex,
+        cards,
+        addCard,
+        nextCard,
+        prevCard,
+      };
     },
   };
   </script>
@@ -106,8 +115,9 @@
   .card {
     padding: 10px;
     border-radius: 10px;
-    width: 20vw; 
-    height: 10vw; 
+    width: 100%;
+    max-width: 350px;
+    height: 160px; /* Ajustamos la altura */
     text-align: center;
     position: relative;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
@@ -159,7 +169,7 @@
   
   .right-arrow {
     position: absolute;
-    right: -30px;
+    right: 300px;
   }
   </style>
   

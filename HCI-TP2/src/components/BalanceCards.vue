@@ -12,9 +12,6 @@
           class="toggle-eye"
           @click="toggleBalance"
         />
-
-
-
         </div>
       </div>
   
@@ -84,8 +81,9 @@
     color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 30%;
+    width: 28%;
     position: relative; /* Para posicionar el ícono */
+    margin-left: 0px;
   }
   
   /* Tamaño del saldo más grande */
@@ -95,19 +93,20 @@
   }
   
   .balance-amount p {
-    font-size: 2rem; /* Tamaño más grande para el balance */
+    font-size: 3rem; /* Tamaño más grande para el balance */
     margin-right: 10px;
     flex-grow: 1; /* Esto empuja el ícono hacia el extremo derecho */
   }
   
   .expense-amount {
-    font-size: 2rem; /* Tamaño más grande para los gastos */
+    font-size: 3rem; /* Tamaño más grande para los gastos */
   }
   
   /* Estilo del ícono de ojo */
   .toggle-eye {
-    width: 25px;
-    height: 25px;
+    width: 50px;
+    height: 50px;
+    margin-right:180px;
     cursor: pointer;
     transition: transform 0.3s ease-in-out; /* Añade una animación suave al click */
   }
@@ -121,9 +120,10 @@
     justify-content: space-around;
     align-items: center;
     background-color: transparent;
-    padding: 20px;
     border-radius: 10px;
-    width: 30%; /* Ajustamos el tamaño del contenedor */
+    width: 32%; /* Ajustamos el tamaño del contenedor */
+    margin-bottom: 100px;
+
   }
   
   .operation {
@@ -134,8 +134,8 @@
     background-color: #1a3a3a; /* Fondo verde oscuro */
     padding: 20px;
     border-radius: 10px;
-    width: 90px;
-    height: 90px;
+    width: 130px;
+    height: 130px;
   }
   
   .operation p {
