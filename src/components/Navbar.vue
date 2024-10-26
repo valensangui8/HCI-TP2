@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar">
+  <nav class="navbar bg-primary">
     <router-link to="/">
       <img src="@/assets/LogoPotty.png" alt="Logo Potty" />
     </router-link>

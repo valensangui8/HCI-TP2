@@ -26,7 +26,6 @@
 
 <script setup>
 import { reactive } from 'vue';
-import { defineProps, defineEmits } from 'vue';
 
 // Props y eventos
 const props = defineProps({
