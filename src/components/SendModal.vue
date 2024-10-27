@@ -10,6 +10,7 @@
             <v-radio label="CBU o CVU" value="cbu" class="black-text"></v-radio>
           </v-radio-group>
           <v-btn v-if="step < 3" @click="nextStep" class="custom-btn" :disabled="!paymentMethodValid"> Siguiente</v-btn>
+          <v-btn @click="prevStep" class="mr-2" outlined>Cerrar</v-btn>
         </div>
 
         <div v-if="step === 2">
@@ -22,7 +23,7 @@
             outlined
             type="input"/>
           <v-btn @click="nextStep" class="custom-btn" :disabled="!isPaymentDetailsValid">Siguiente</v-btn>
-
+          <v-btn @click="prevStep" class="mr-2" outlined>Anterior</v-btn>
         </div>
 
         <div v-if="step === 3" class="center-container">
@@ -160,7 +161,11 @@ const nextStep = () => {
 };
 
 const prevStep = () => {
-  if (step.value > 1) step.value--;
+  if (step.value > 1){
+    step.value--;
+  }else{
+    closeModal();
+  }
 };
 
 const confirmAmount = () => {
@@ -198,6 +203,12 @@ const isAmountExceedingBalance = computed(() => {
   const availableBalance = authStore.currentUser?.balance || 0;
   return amount.value > availableBalance;
 });
+
+const formattedBalance = computed(() => {
+  const balance = authStore.currentUser?.balance || 0;
+  return `$${balance.toFixed(2)}`;
+});
+
 </script>
 
 <style scoped>
