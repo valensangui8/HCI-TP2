@@ -1,4 +1,4 @@
-<template>
+  <template>
     <div class="form-container">
       <v-card class="form-card">
         <v-card-text>
@@ -61,9 +61,23 @@
           <v-btn color="secondary" @click="goBack" class="back-btn custom-btn">Volver</v-btn>
         </v-card-text>
       </v-card>
+  
+      <!-- Confirmation Dialog -->
+      <v-dialog v-model="confirmationDialog" max-width="400">
+        <v-card>
+          <v-card-title class="headline">Confirmación de Pago</v-card-title>
+          <v-card-text>
+            El pago ha sido exitoso. ¿Desea continuar con otra transacción?
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" @click="confirmationDialog = false">Aceptar</v-btn>
+            <v-btn color="secondary" @click="closeDialog">Cerrar</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
   </template>
-  
   
   <script>
   import { ref } from 'vue';
@@ -79,7 +93,7 @@
     },
     setup() {
       const router = useRouter();
-      const showBottomSheet = ref(false); // State for Bottom Sheet visibility
+      const showBottomSheet = ref(false);
       const step = ref(1);
       const paymentMethod = ref('');
       const paymentDetails = ref('');
@@ -92,6 +106,8 @@
   
       const cardType = 'Visa';
       const cardNumber = '**** **** **** 1234';
+  
+      const confirmationDialog = ref(false); // State for confirmation dialog visibility
   
       const nextStep = () => {
         if (step.value < 3) {
@@ -108,7 +124,7 @@
       };
   
       const confirmAmount = () => {
-        alert(`Pago Exitoso`);
+        confirmationDialog.value = true; // Show confirmation dialog
         resetForm();
       };
   
@@ -117,15 +133,20 @@
         paymentMethod.value = '';
         paymentDetails.value = '';
         amount.value = 0;
-        showBottomSheet.value = false; // Close the Bottom Sheet after submission
+        showBottomSheet.value = false;
+      };
+  
+      const closeDialog = () => {
+        confirmationDialog.value = false;
+        router.push('/urna');
       };
   
       const goBack = () => {
-        router.push('/urna'); // Redirect to /urna route
+        router.push('/urna');
       };
   
       return {
-        showBottomSheet, // Bind to Bottom Sheet visibility
+        showBottomSheet,
         step,
         paymentMethod,
         paymentDetails,
@@ -139,55 +160,56 @@
         recipientCvu,
         cardType,
         cardNumber,
+        confirmationDialog,
+        closeDialog,
         goBack
       };
     },
   };
   </script>
+  
   <style scoped>
   .form-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Altura completa de la vista */
-    background-color: black; /* Fondo negro para toda la página */
+    height: 100vh;
+    background-color: black;
   }
   
   .form-card {
-    background-color: white; /* Fondo blanco para la tarjeta */
-    border-radius: 16px; /* Bordes redondeados */
+    background-color: white;
+    border-radius: 16px;
     padding: 20px;
-    width: 400px; /* Ajusta el tamaño de la tarjeta según sea necesario */
+    width: 400px;
   }
   
   .large-input {
-    width: 100%; /* Asegura que los inputs ocupen todo el ancho de la tarjeta */
-    margin: 10px 0; /* Espaciado vertical */
-    color: black; /* Título en negro */
-  
+    width: 100%;
+    margin: 10px 0;
+    color: black;
   }
   
   .header h1 {
-    color: black; /* Título en negro */
+    color: black;
   }
   
   .black-text {
-    color: black; /* Texto negro */
+    color: black;
   }
   
   .back-btn {
-    margin-top: 20px; /* Espaciado superior para el botón de volver */
+    margin-top: 20px;
   }
   
   .custom-btn {
-    background-color: #001E18; /* Color personalizado para todos los botones */
-    color: white; /* Color del texto en los botones */
-    margin: 10px 0; /* Espaciado vertical para los botones */
+    background-color: #001E18;
+    color: white;
+    margin: 10px 0;
   }
   
-  /* Asegúrate de que el texto en los inputs sea legible */
   .v-input__control .v-input__slot {
-    background-color: white; /* Fondo del campo de entrada */
+    background-color: white;
   }
   </style>
   
