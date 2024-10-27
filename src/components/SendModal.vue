@@ -5,20 +5,13 @@
           <form class="form-fields" @submit.prevent>
 
             <div v-if="step===1">
-              <v-radio-group v-model="accountOrCard" label="Seleccione fuente de fondos" class="text-center">
-              <v-radio label="Usar dinero en cuenta" value="account" class="black--text"></v-radio>
-              <v-radio label="Usar tarjeta" value="card" class="black--text"></v-radio>
-          </v-radio-group>
-            </div>  
-
-            <div v-if="step===2">
               <v-radio-group v-model="paymentMethod" class="text-center">
                 <v-radio label="Link de Pago" value="link" class="black-text"></v-radio>
                 <v-radio label="CBU o CVU" value="cbu" class="black-text"></v-radio>
               </v-radio-group>
             </div> 
 
-            <div v-if="step===3">
+            <div v-if="step===2">
               <v-text-field
                   v-model="paymentDetails"
                   :label="paymentMethod === 'link' ? 'Ingrese el Link de Pago' : 'Ingrese el CBU o CVU'"
@@ -30,7 +23,7 @@
               ></v-text-field>
             </div>
               
-            <div v-if="step===4" class="center-container">
+            <div v-if="step===3" class="center-container">
               <div class="step">
               <div class="component-container">
                 <div class="destinatario-container">
@@ -41,14 +34,32 @@
                     :cvu="recipientCvu"
                   />
                 </div>
-                <div class="creditcard-container">
+              <div class="button-container">
+                <v-col class="py-2" cols="12">
+                  
+                  <v-btn-toggle
+                    color="#001E18"
+                  >
+                    <v-btn value="card" @click="showCard">
+                      Tarjeta
+                    </v-btn>
+                    <v-btn value="money" @click="showBalance">
+                      Dinero
+                    </v-btn>
+                  </v-btn-toggle>
+                </v-col>
+                </div>
+                <div class="creditcard-container" v-if="isCardView">
                   <credit-card
                     :cardType="cardType"
                     :cardNumber="cardNumber"
                   />
                 </div>
+                <div class="balance-container" v-else>
+                   <p>Dinero disponible: ${{balance}}</p> 
+                </div>
               </div>
-  
+              <div class="form-fields">
               <v-text-field
                 v-model.number="amount"
                 type="number"
@@ -61,9 +72,10 @@
               />
               <v-btn @click="prevStep" class="mr-2" outlined>Anterior</v-btn>
               <v-btn color="primary" @click="confirmAmount">Enviar</v-btn>
+              </div>
           </div>
           </div>
-            <v-btn v-if="step < 4" @click="nextStep" class="custom-btn">{{ step < 3 ? 'Siguiente' : 'Confirmar' }}</v-btn>
+            <v-btn v-if="step < 3" @click="nextStep" class="custom-btn">{{ step < 3 ? 'Siguiente' : 'Confirmar' }}</v-btn>
           </form>
       </div>
   </div>
@@ -86,7 +98,7 @@
 import { ref, watch } from 'vue';
 import Destinatario from '@/components/Destinatario.vue';
 import CreditCard from '@/components/CreditCard.vue';
-
+import BalanceCards from './BalanceCards.vue';
 export default {
   name: 'SendModal',
   props: {
@@ -100,6 +112,7 @@ export default {
     CreditCard,
   },
   setup(props, { emit }) {
+    const isCardView = ref(true);
     const internalShowModal = ref(props.visible);
     const step = ref(1);
     const accountOrCard = ref('');
@@ -113,7 +126,7 @@ export default {
     const recipientCvu = '20-12345678-9';
     const cardType = 'Visa';
     const cardNumber = '**** **** **** 1234';
-
+    const balance = ref(0);
     const confirmationDialog = ref(false);
 
     // Watch prop for modal visibility changes
@@ -170,7 +183,17 @@ export default {
         closeModal();
       }
     };
+    const showCard = () => {
+      isCardView.value = true; // Show credit card view
+    };
 
+    const showBalance = () => {
+      isCardView.value = false; // Show balance view
+    };
+    const formattedBalance = computed(() => {
+      const balance = authStore.currentUser?.balance || 0;
+      return '$${balance.toFixed(2)}';
+    });
     return {
       internalShowModal,
       step,
@@ -192,6 +215,10 @@ export default {
       closeDialog,
       closeModal,
       goBack,
+      showCard,
+      showBalance,
+      isCardView,
+      balance,
     };
   },
 };
@@ -231,6 +258,19 @@ export default {
   .custom-btn{
     background-color: #001E18;
     color:white;
+    border-radius: 10px;
+    padding:5px;
+  }
+  .balance-container {
+    padding: 10px;
+    background-color: #f0f0f0; 
+    border-radius: 5px;
+    margin:20px;
+  }
+  .button-container {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 35px
   }
   @keyframes slide-up {
       from {
