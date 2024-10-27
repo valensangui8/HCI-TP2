@@ -1,6 +1,6 @@
 <template>
   <div class="balance-cards">
-    <!-- Tarjetas de Balance y Gastos -->
+    <!-- Balance Card -->
     <div class="card">
       <h3>Tu Balance</h3>
       <div class="balance-amount">
@@ -15,12 +15,13 @@
       </div>
     </div>
 
+    <!-- Expenses Card -->
     <div class="card">
       <h3>Tus Gastos</h3>
       <p class="expense-amount">{{ formattedExpenses }}</p>
     </div>
 
-    <!-- Operaciones: Ingresar, Cobrar, Enviar -->
+    <!-- Operations Section -->
     <div class="operations">
       <router-link to="/ingresar" class="operation-link">
         <div class="operation">
@@ -36,13 +37,15 @@
         </div>
       </router-link>
 
-      <router-link to="/enviar" class="operation-link">
-        <div class="operation">
-          <img src="@/assets/enviar-icon.png" alt="Enviar" class="operation-icon">
-          <p>Enviar</p>
-        </div>
-      </router-link>
+      <!-- Button to Open Send Modal -->
+      <div class="operation" @click="sendModalVisible = true">
+        <img src="@/assets/enviar-icon.png" alt="Enviar" class="operation-icon">
+        <p>Enviar</p>
+      </div>
     </div>
+
+    <!-- Send Modal -->
+    <SendModal v-model:visible="sendModalVisible" />
   </div>
 </template>
 
@@ -51,6 +54,7 @@ import { ref, computed } from 'vue';
 import eyeIcon from '@/assets/eye-icon.png';
 import closedEyeIcon from '@/assets/closed-eye-icon.png';
 import { useAuthStore } from '@/stores/auth.js';
+import SendModal from './SendModal.vue';
 
 const authStore = useAuthStore();
 
@@ -59,18 +63,18 @@ const toggleBalance = () => {
   showBalance.value = !showBalance.value;
 };
 
-// Obtener balance y gastos del usuario actual
 const formattedBalance = computed(() => {
   const balance = authStore.currentUser?.balance || 0;
   return `$${balance.toFixed(2)}`;
 });
 
-console.log(authStore.currentUser.value);
 const formattedExpenses = computed(() => {
-  // Suponiendo que los gastos están en el `authStore` como `currentUser.expenses`
   const expenses = authStore.currentUser?.expenses || 0;
   return `$${expenses.toLocaleString()}`;
 });
+
+// Control SendModal visibility
+const sendModalVisible = ref(false);
 </script>
 
 <style scoped>
@@ -155,5 +159,22 @@ const formattedExpenses = computed(() => {
 
 .operation-link:hover {
   text-decoration: none;
+}
+
+.operation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a3a3a;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90px;
+  height: 90px;
+  cursor: pointer; /* Ensures cursor changes to pointer on hover */
+}
+
+.operation:hover {
+  transform: scale(1.05); /* Optional: Add slight scaling effect on hover */
 }
 </style>
