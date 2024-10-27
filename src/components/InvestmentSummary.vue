@@ -21,6 +21,7 @@
 import { computed, onMounted } from 'vue';
 import { Chart, registerables } from 'chart.js';
 import { useAuthStore } from '@/stores/authStore';
+import { useRouter } from 'vue-router';
 
 // Register necessary Chart.js components
 Chart.register(...registerables);
@@ -48,6 +49,12 @@ const project6MonthsData = () => {
   }
   
   return projectedData;
+};
+
+const router = useRouter();
+
+const invest = () => {
+  router.push('/investments');
 };
 
 // Crear el gráfico

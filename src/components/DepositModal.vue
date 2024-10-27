@@ -38,14 +38,7 @@ const closeModal = () => {
 };
 </script>
 
-<template>
-  <div v-if="props.visible">
-    <CreditCard />
-    <input v-model="amount" type="number" placeholder="Enter amount" />
-    <button @click="submitDeposit">Submit Deposit</button>
-    <button @click="closeModal">Close</button>
-  </div>
-</template>
+
 
 <style scoped>
 .overlay {
