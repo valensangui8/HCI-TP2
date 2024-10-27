@@ -63,7 +63,6 @@
                 type="number"
                 label="Monto ($)"
                 placeholder="Ingrese el monto"
-                prepend-icon="mdi-cash"
                 :rules="[
                   value => !!value || 'El monto es obligatorio',
                   value => value > 0 || 'El monto debe ser positivo',
@@ -71,6 +70,12 @@
                 ]"
                 required
                 class="input"
+              />
+              <v-text-field
+                v-model="description"
+                label="Descripción (opcional)"
+                placeholder="Ingrese una descripción"
+                outlined
               />
               <v-btn @click="prevStep" class="mr-2" outlined>Anterior</v-btn>
               <v-btn :disabled="isAmountExceedingBalance || amount <= 0" color="primary" @click="confirmAmount">Enviar</v-btn>
@@ -117,6 +122,7 @@ const isCardView = ref(false);
 
 const paymentMethod = ref('');
 const paymentDetails = ref('');
+const description = ref('');
 const amount = ref(0);
 const authStore = useAuthStore();
 
