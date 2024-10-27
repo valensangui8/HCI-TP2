@@ -80,9 +80,9 @@
         const amount = ref(0);
     
         // Hardcoded data
-        const recipientAvatar = 'https://cdn.vuetifyjs.com/images/john.jpg';
-        const recipientName = 'Juan Pérez';
-        const recipientBank = 'Banco Nación';
+        const recipientAvatar = 'https://assets.mi6-hq.com/images/stills/cr_32_280.jpg';
+        const recipientName = 'Le Chiffre';
+        const recipientBank = 'Banco Royale';
         const recipientCvu = '20-12345678-9';
         const cardType = 'Visa';
         const cardNumber = '**** **** **** 1234';

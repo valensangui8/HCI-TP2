@@ -87,6 +87,12 @@ export default {
 
     const submitCard = () => {
       alert('Tarjeta guardada correctamente.');
+      const cardInfo = {
+        number: cardNumber.value,
+        holder: cardHolder.value,
+        expiry: expiryDate.value,
+        cvv: cvv.value,
+      };
       router.push('/Urna');
       emit('close');
     };
