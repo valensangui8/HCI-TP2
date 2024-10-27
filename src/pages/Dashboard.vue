@@ -9,8 +9,7 @@
       </div>
       <TransactionHistory :transactions="transactions" />
     </div>
-    <SendModal></SendModal>
-    
+      
   </div>
 </template>
 

@@ -15,10 +15,19 @@
       </div>
     </div>
 
-    <!-- Expenses Card -->
+    <!-- Expenses Card with Toggle -->
     <div class="card">
       <h3>Tus Gastos</h3>
-      <p class="expense-amount">{{ formattedExpenses }}</p>
+      <div class="balance-amount">
+        <p v-if="showExpenses">{{ formattedExpenses }}</p>
+        <p v-else>****</p>
+        <img
+          :src="showExpenses ? eyeIcon : closedEyeIcon"
+          alt="Mostrar/ocultar gastos"
+          class="toggle-eye"
+          @click="toggleExpenses"
+        />
+      </div>
     </div>
 
     <!-- Operations Section -->
@@ -58,11 +67,19 @@ import SendModal from './SendModal.vue';
 
 const authStore = useAuthStore();
 
+// Balance visibility toggle
 const showBalance = ref(true);
 const toggleBalance = () => {
   showBalance.value = !showBalance.value;
 };
 
+// Expenses visibility toggle
+const showExpenses = ref(true);
+const toggleExpenses = () => {
+  showExpenses.value = !showExpenses.value;
+};
+
+// Computed balance and expenses formatting
 const formattedBalance = computed(() => {
   const balance = authStore.currentUser?.balance || 0;
   return `$${balance.toFixed(2)}`;
@@ -103,10 +120,6 @@ const sendModalVisible = ref(false);
   flex-grow: 1;
 }
 
-.expense-amount {
-  font-size: 2rem;
-}
-
 .toggle-eye {
   width: 25px;
   height: 25px;
@@ -138,6 +151,7 @@ const sendModalVisible = ref(false);
   border-radius: 10px;
   width: 90px;
   height: 90px;
+  cursor: pointer;
 }
 
 .operation p {
@@ -161,20 +175,7 @@ const sendModalVisible = ref(false);
   text-decoration: none;
 }
 
-.operation {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #1a3a3a;
-  padding: 20px;
-  border-radius: 10px;
-  width: 90px;
-  height: 90px;
-  cursor: pointer; /* Ensures cursor changes to pointer on hover */
-}
-
 .operation:hover {
-  transform: scale(1.05); /* Optional: Add slight scaling effect on hover */
+  transform: scale(1.05);
 }
 </style>
