@@ -1,101 +1,85 @@
 <template>
-  <v-dialog v-model="internalShowModal" width="50%" persistent>
-    <v-card>
-      <v-card-title class="d-flex justify-space-between align-center">
-        <span class="text-h5">Detalles de Envío</span>
-        <v-btn icon @click="closeModal">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </v-card-title>
+  <div class="overlay" v-if="internalShowModal" @click.self="closeModal">
+    <div class="down-sheet">
+          <h2  style="color: black;">Enviar Dinero</h2>
+          <form class="form-fields" @submit.prevent>
 
-      <v-card-text>
-        <form @submit.prevent>
-          <!-- Step 1: Choose account or card -->
-          <div v-if="step === 1">
-            <v-radio-group v-model="accountOrCard" label="Seleccione fuente de fondos" class="text-center">
+            <div v-if="step===1">
+              <v-radio-group v-model="accountOrCard" label="Seleccione fuente de fondos" class="text-center">
               <v-radio label="Usar dinero en cuenta" value="account" class="black--text"></v-radio>
               <v-radio label="Usar tarjeta" value="card" class="black--text"></v-radio>
-            </v-radio-group>
-          </div>
+          </v-radio-group>
+            </div>  
 
-          <!-- Step 2: Choose payment method -->
-          <div v-if="step === 2">
-            <v-radio-group v-model="paymentMethod" class="text-center">
-              <v-radio label="Link de Pago" value="link" class="black--text"></v-radio>
-              <v-radio label="CBU o CVU" value="cbu" class="black--text"></v-radio>
-            </v-radio-group>
-          </div>
+            <div v-if="step===2">
+              <v-radio-group v-model="paymentMethod" class="text-center">
+                <v-radio label="Link de Pago" value="link" class="black-text"></v-radio>
+                <v-radio label="CBU o CVU" value="cbu" class="black-text"></v-radio>
+              </v-radio-group>
+            </div> 
 
-          <!-- Step 3: Enter payment details with CBU validation and maxlength -->
-          <div v-if="step === 3">
-            <v-text-field
-              v-model="paymentDetails"
-              :label="paymentMethod === 'link' ? 'Ingrese el Link de Pago' : 'Ingrese el CBU o CVU'"
-              :maxlength="22"
-              :rules="[paymentMethod === 'cbu' ? cbuValidation : () => true]"
-              required
-              outlined
-              type="number"
-            ></v-text-field>
-          </div>
-
-          <!-- Step 4: Confirm details, show cards only if "Usar tarjeta" is selected -->
-          <div v-if="step === 4">
-            <div v-if="accountOrCard === 'card'" class="d-flex justify-space-between mb-4">
-              <destinatario
-                class="flex-grow-1 mr-4"
-                :avatar="recipientAvatar"
-                :recipientName="recipientName"
-                :bankName="recipientBank"
-                :cvu="recipientCvu"
-              />
-              <credit-card class="flex-grow-1" :cardType="cardType" :cardNumber="cardNumber" />
+            <div v-if="step===3">
+              <v-text-field
+                  v-model="paymentDetails"
+                  :label="paymentMethod === 'link' ? 'Ingrese el Link de Pago' : 'Ingrese el CBU o CVU'"
+                  :maxlength="22"
+                  :rules="[paymentMethod === 'cbu' ? cbuValidation : () => true]"
+                  required
+                  outlined
+                  type="input"
+              ></v-text-field>
             </div>
-
-            <v-text-field
-              v-model.number="amount"
-              type="number"
-              label="Monto ($)"
-              placeholder="Ingrese el monto"
-              prepend-icon="mdi-cash"
-              :rules="[value => !!value || 'El monto es obligatorio']"
-              required
-              outlined
-            />
-            <v-btn @click="prevStep" class="mr-2" outlined>Anterior</v-btn>
-            <v-btn color="primary" @click="confirmAmount">Enviar</v-btn>
+              
+            <div v-if="step===4" class="center-container">
+              <div class="step">
+              <div class="component-container">
+                <div class="destinatario-container">
+                  <destinatario
+                    :avatar="recipientAvatar"
+                    :recipientName="recipientName"
+                    :bankName="recipientBank"
+                    :cvu="recipientCvu"
+                  />
+                </div>
+                <div class="creditcard-container">
+                  <credit-card
+                    :cardType="cardType"
+                    :cardNumber="cardNumber"
+                  />
+                </div>
+              </div>
+  
+              <v-text-field
+                v-model.number="amount"
+                type="number"
+                label="Monto ($)"
+                placeholder="Ingrese el monto"
+                prepend-icon="mdi-cash"
+                :rules="[value => !!value || 'El monto es obligatorio']"
+                required
+                class="input"
+              />
+              <v-btn @click="prevStep" class="mr-2" outlined>Anterior</v-btn>
+              <v-btn color="primary" @click="confirmAmount">Enviar</v-btn>
           </div>
-
-          <v-btn
-            v-if="step < 4"
-            @click="nextStep"
-            color="primary"
-            class="mt-4"
-          >
-            {{ step < 4 ? 'Siguiente' : 'Confirmar' }}
-          </v-btn>
-        </form>
-      </v-card-text>
-
-      <v-card-actions>
-        <v-btn color="secondary" @click="goBack">Volver</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-
+          </div>
+            <v-btn v-if="step < 4" @click="nextStep" class="custom-btn">{{ step < 3 ? 'Siguiente' : 'Confirmar' }}</v-btn>
+          </form>
+      </div>
+  </div>
   <v-dialog v-model="confirmationDialog" max-width="400">
-    <v-card>
-      <v-card-title class="headline">Confirmación de Pago</v-card-title>
-      <v-card-text>
-        El pago ha sido exitoso. ¿Desea continuar con otra transacción?
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" @click="confirmationDialog = false">Aceptar</v-btn>
-        <v-btn color="secondary" @click="closeDialog">Cerrar</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+  <v-card>
+    <v-card-title class="headline">Confirmación de Pago</v-card-title>
+    <v-card-text>
+      El pago ha sido exitoso. ¿Desea continuar con otra transacción?
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn color="primary" @click="confirmationDialog = false">Aceptar</v-btn>
+      <v-btn color="secondary" @click="closeDialog">Cerrar</v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
 </template>
 
 <script>
@@ -214,7 +198,46 @@ export default {
 </script>
 
 <style scoped>
-.black--text {
-  color: black !important;
-}
+  .center-container {
+      display: flex;
+      justify-content: center; /* Centra horizontalmente */
+      align-items: center; /* Centra verticalmente */
+      height: 70vh; /* Ajusta la altura del contenedor */
+  }
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 1000;
+  }
+  .down-sheet {
+    width: 100%;
+    max-width: 700px;
+    background-color: white;
+    padding: 20px;
+    padding-bottom: 50px;
+    border-radius: 10px 10px 0 0;
+    animation: slide-up 0.3s ease-out;
+  }
+  .black--text {
+    color: black !important;
+  }
+  .custom-btn{
+    background-color: #001E18;
+    color:white;
+  }
+  @keyframes slide-up {
+      from {
+        transform: translateY(100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
 </style>

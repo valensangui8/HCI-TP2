@@ -1,7 +1,7 @@
 <template>
-  <div v-if="isVisible" class="modal-overlay">
-    <div class="modal">
-      <h2>Agregar Nueva Tarjeta</h2>
+<div class="overlay" v-if="isVisible" @click.self="closeModal">
+  <div class="down-sheet">
+      <h2  style="color: black;">Agregar Nueva Tarjeta</h2>
       <!-- Previsualización de la tarjeta -->
       <div class="card-preview" :style="{ backgroundColor: newCard.color }">
         <div class="card-content">
@@ -244,7 +244,7 @@ input::placeholder {
 }
 
 .submit-button {
-  background-color: #28a745;
+  background-color: #001E18;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -255,11 +255,11 @@ input::placeholder {
 }
 
 .submit-button:hover {
-  background-color: #218838;
+  background-color: #000e0b;
 }
 
 .cancel-button {
-  background-color: #e74c3c;
+  background-color: #001E18;
   color: white;
   padding: 12px 20px;
   margin-top: 15px;
@@ -271,6 +271,37 @@ input::placeholder {
 }
 
 .cancel-button:hover {
-  background-color: #c0392b;
+  background-color: #000e0b;
 }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 1000;
+  }
+  
+  .down-sheet {
+    width: 100%;
+    max-width: 700px;
+    background-color: white;
+    padding: 20px;
+    padding-bottom: 50px;
+    border-radius: 10px 10px 0 0;
+    animation: slide-up 0.3s ease-out;
+  }
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
 </style>
