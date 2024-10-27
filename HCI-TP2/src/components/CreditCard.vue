@@ -49,56 +49,52 @@
   </div>
 </template>
 
-<script>
-import AddCardForm from '@/components/AddCardForm.vue'; // Adjust the path as necessary
+<script setup>
+import { ref } from 'vue';
+import AddCardForm from '@/components/AddCardForm.vue'; // Ajusta la ruta según sea necesario
 
-export default {
-  
-  name: 'CreditCard',
-  components: {
-    AddCardForm
+// Definición de propiedades reactivas
+const currentCardIndex = ref(0); // Índice para la tarjeta actual
+const isAddCardFormVisible = ref(false);
+
+const cards = ref([
+  { 
+    bank: 'Banco Royale', 
+    number: '0000 0000 0000 0000', 
+    holder: 'James Bond', 
+    expiry: '03/60', 
+    color: '#6a0dad' // Color violeta
   },
-  data() {
-    return {
-      currentCardIndex: 0, // Índice para la tarjeta actual
-      cards: [
-        { 
-          bank: 'Banco Royale', 
-          number: '0000 0000 0000 0000', 
-          holder: 'James Bond', 
-          expiry: '03/60', 
-          color: '#6a0dad' // Color violeta
-        },
-        { 
-          bank: 'Banco Imperial', 
-          number: '1111 1111 1111 1111', 
-          holder: 'James Bond', 
-          expiry: '12/50', 
-          color: '#4B0082' // Color púrpura
-        }
-      ],
-      isAddCardFormVisible: false, 
-    };
-  },
-  methods: {
-    addCard() {
-      this.isAddCardFormVisible = true;
-    },
-    editCard(index) {
-      alert(`Editar tarjeta: ${index}`);
-      // Lógica para editar la tarjeta
-    },
-    deleteCard(index) {
-      alert(`Eliminar tarjeta: ${index}`);
-      // Lógica para eliminar la tarjeta
-    },
-    nextCard() {
-      this.currentCardIndex = (this.currentCardIndex + 1) % this.cards.length;
-    },
-    prevCard() {
-      this.currentCardIndex = (this.currentCardIndex - 1 + this.cards.length) % this.cards.length;
-    },
-  },
+  { 
+    bank: 'Banco Imperial', 
+    number: '1111 1111 1111 1111', 
+    holder: 'James Bond', 
+    expiry: '12/50', 
+    color: '#4B0082' // Color púrpura
+  }
+]);
+
+// Definición de métodos
+const addCard = () => {
+  isAddCardFormVisible.value = true;
+};
+
+const editCard = (index) => {
+  alert(`Editar tarjeta: ${index}`);
+  // Lógica para editar la tarjeta
+};
+
+const deleteCard = (index) => {
+  alert(`Eliminar tarjeta: ${index}`);
+  // Lógica para eliminar la tarjeta
+};
+
+const nextCard = () => {
+  currentCardIndex.value = (currentCardIndex.value + 1) % cards.value.length;
+};
+
+const prevCard = () => {
+  currentCardIndex.value = (currentCardIndex.value - 1 + cards.value.length) % cards.value.length;
 };
 </script>
 
