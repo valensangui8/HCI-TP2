@@ -6,25 +6,18 @@
       <!-- Previsualización de la tarjeta -->
       <div class="card-preview" :style="{ backgroundColor: newCard.color }">
         <div class="card-content">
-          <div class="card-header">
-            <img src="@/assets/LogoPotty.png" alt="Banco Logo" class="bank-logo" />
-            <h4>{{ newCard.bank || 'Banco Ejemplo' }}</h4>
-          </div>
+          <div class="card-bank">{{ newCard.bank || 'Banco' }}</div>
           <div class="card-number">{{ newCard.number || '0000 0000 0000 0000' }}</div>
+          <div class="card-holder">{{ newCard.holder || 'Nombre Titular' }}</div>
           <div class="card-footer">
-            <span>{{ newCard.holder || 'Nombre Titular' }}</span>
             <span>{{ newCard.expiry || 'MM/YY' }}</span>
+            <span class="card-cvv">{{ newCard.cvv || '*CVV' }}</span>
           </div>
+          
         </div>
       </div>
 
       <form @submit.prevent="submitForm">
-        <div class="form-field">
-          <label for="bank">Banco</label>
-          <input v-model="newCard.bank" id="bank" required @input="validateLetters" />
-          <span v-if="errors.bank" class="error-message">{{ errors.bank }}</span>
-        </div>
-
         <div class="form-field">
           <label for="number">Número de Tarjeta</label>
           <input
@@ -39,7 +32,12 @@
 
         <div class="form-field">
           <label for="holder">Titular</label>
-          <input v-model="newCard.holder" id="holder" required />
+          <input
+            v-model="newCard.holder"
+            id="holder"
+            placeholder="Nombre del titular"
+            required
+          />
           <span v-if="errors.holder" class="error-message">{{ errors.holder }}</span>
         </div>
 
@@ -53,6 +51,18 @@
             @input="formatExpiryDate"
           />
           <span v-if="errors.expiry" class="error-message">{{ errors.expiry }}</span>
+        </div>
+
+        <div class="form-field">
+          <label for="cvv">CVV</label>
+          <input
+            v-model="newCard.cvv"
+            id="cvv"
+            maxlength="3"
+            placeholder="CVV"
+            @input="formatCVV"
+          />
+          <span v-if="errors.cvv" class="error-message">{{ errors.cvv }}</span>
         </div>
 
         <div class="form-field">
@@ -78,16 +88,32 @@ const emit = defineEmits(['close']);
 
 const userCardsStore = useUserCardsStore();
 const newCard = ref({
-  bank: '',
   number: '',
   holder: '',
   expiry: '',
+  cvv: '',
   color: '#3498db',
 });
 const errors = ref({});
 
-const validateLetters = (e) => {
-  newCard.value.bank = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+// Array de bancos con prefijos de números de tarjeta
+const bankList = [
+  { bank: 'Banco Royale', prefix: '1' },
+  { bank: 'Banco Internacional', prefix: '2' },
+  { bank: 'Banco Nacional', prefix: '3' },
+  { bank: 'Banco de la Gente', prefix: '4' },
+  { bank: 'Banco de la Ciudad', prefix: '5' },
+  { bank: 'Banco de la Provincia', prefix: '6' },
+  { bank: 'Banco de la Capital', prefix: '7' },
+  { bank: 'Banco de la Nación', prefix: '8' },
+  { bank: 'Banco de la República', prefix: '9' },
+  { bank: 'Banco de la Unión', prefix: '0' },
+];
+
+// Detectar banco en función de los primeros dígitos de la tarjeta
+const detectBank = () => {
+  const bank = bankList.find(b => newCard.value.number.startsWith(b.prefix));
+  newCard.value.bank = bank ? bank.bank : '';
 };
 
 const formatCardNumber = (e) => {
@@ -95,6 +121,7 @@ const formatCardNumber = (e) => {
     .replace(/\D/g, '')
     .replace(/(\d{4})(?=\d)/g, '$1 ')
     .trim();
+  detectBank(); // Llamar a la detección de banco después de formatear
 };
 
 const formatExpiryDate = (e) => {
@@ -104,14 +131,19 @@ const formatExpiryDate = (e) => {
     .substring(0, 5);
 };
 
+const formatCVV = (e) => {
+  newCard.value.cvv = e.target.value.replace(/\D/g, '').substring(0, 3);
+};
+
 const validateForm = () => {
   errors.value = {};
-  if (!newCard.value.bank) errors.value.bank = 'Por favor ingresa el nombre del banco.';
   if (!/^\d{4} \d{4} \d{4} \d{4}$/.test(newCard.value.number))
     errors.value.number = 'Número de tarjeta inválido. Usa el formato: 0000 0000 0000 0000';
   if (!newCard.value.holder) errors.value.holder = 'Por favor ingresa el nombre del titular.';
   if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(newCard.value.expiry))
     errors.value.expiry = 'Fecha de expiración inválida. Usa el formato: MM/YY';
+  if (!/^\d{3}$/.test(newCard.value.cvv))
+    errors.value.cvv = 'CVV inválido. Debe contener 3 dígitos.';
 
   return Object.keys(errors.value).length === 0;
 };
@@ -130,7 +162,7 @@ const closeModal = () => {
 };
 
 const resetForm = () => {
-  newCard.value = { bank: '', number: '', holder: '', expiry: '', color: '#3498db' };
+  newCard.value = { number: '', holder: '', expiry: '', cvv: '', color: '#3498db' };
   errors.value = {};
 };
 </script>
@@ -142,7 +174,7 @@ const resetForm = () => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,8 +182,8 @@ const resetForm = () => {
 }
 
 .modal {
-  background: #1a1a1a;
-  color: white;
+  background: white;
+  color: black;
   padding: 30px;
   border-radius: 15px;
   width: 400px;
@@ -175,17 +207,6 @@ const resetForm = () => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100px;
-}
-
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.bank-logo {
-  width: 40px;
 }
 
 .card-number {
@@ -194,10 +215,24 @@ const resetForm = () => {
   margin: 10px 0;
 }
 
+.card-holder {
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
 .card-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   font-size: 0.9rem;
+}
+
+.card-cvv {
+  margin-left: auto;
+  bottom: 10px;
+  right: 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: white;
 }
 
 .form-field {
@@ -208,22 +243,21 @@ const resetForm = () => {
   display: block;
   margin-bottom: 5px;
   font-size: 0.9rem;
-  color: #ccc;
+  color: black;
 }
 
 input {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #555;
-  background-color: #222;
-  color: #ddd;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  color: black;
   font-size: 1rem;
-  transition: border-color 0.3s;
 }
 
-input:focus {
-  border-color: #28a745;
+input::placeholder {
+  color: gray;
 }
 
 .error-message {
@@ -240,7 +274,6 @@ input:focus {
   cursor: pointer;
   border-radius: 5px;
   font-size: 1rem;
-  transition: background-color 0.3s;
 }
 
 .submit-button:hover {
@@ -257,7 +290,6 @@ input:focus {
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.3s;
 }
 
 .cancel-button:hover {

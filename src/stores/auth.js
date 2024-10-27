@@ -16,30 +16,11 @@ export const useAuthStore = defineStore('auth', () => {
       name: 'María',
       lastName: 'García',
       email: 'maria@example.com',
-      password: '123',
-      balance: 12000.50,
-      expenses: 5000,
-      cards: [
-        {
-          id: 1,
-          bank: 'Banco Royale',
-          number: '1234 5678 9012 3456',
-          holder: 'María García',
-          expiry: '12/26',
-          color: '#6a0dad'
-        }
-      ],
-      transactions: [
-        { id: 1, amount: 100.00, date: '2024-01-01', description: 'Compra en supermercado' },
-        { id: 2, amount: 50.00, date: '2024-02-01', description: 'Taxi' },
-        { id: 3, amount: 200.00, date: '2024-03-01', description: 'Pago de suscripción' },
-      ]
-      
+      password: '12',
     }
   ]);
 
   const currentUser = ref(null);
-  console.log((users));
 
   // Cargar datos desde localStorage al iniciar la app
   const loadFromLocalStorage = () => {
@@ -52,7 +33,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  // Guardar `currentUser` y `users` en localStorage al iniciar sesión
   const saveToLocalStorage = () => {
     localStorage.setItem('users', JSON.stringify(users.value));
     localStorage.setItem('currentUser', JSON.stringify(currentUser.value));
@@ -85,7 +65,29 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('currentUser');
   };
 
-  // Llamar a la función de carga al definir la store
+  // Métodos para modificar los datos del usuario actual
+  const addCard = (newCard) => {
+    if (currentUser.value) {
+      currentUser.value.cards.push(newCard);
+      saveToLocalStorage();
+    }
+  };
+
+  const removeCard = (cardId) => {
+    if (currentUser.value) {
+      currentUser.value.cards = currentUser.value.cards.filter(card => card.id !== cardId);
+      saveToLocalStorage();
+    }
+  };
+
+  const updateBalance = (amount) => {
+    if (currentUser.value) {
+      currentUser.value.balance += amount;
+      saveToLocalStorage();
+    }
+  };
+
+  // Llamada a cargar los datos al iniciar la store
   loadFromLocalStorage();
 
   return {
@@ -94,6 +96,9 @@ export const useAuthStore = defineStore('auth', () => {
     register,
     login,
     logout,
+    addCard,
+    removeCard,
+    updateBalance,
     loadFromLocalStorage,
   };
 });

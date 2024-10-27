@@ -38,13 +38,18 @@
           <p>Ingresar</p>
         </div>
       </router-link>
+      <div>
+    <!-- Botón para abrir el modal de "Cobrar" -->
+    <div @click="toggleModal" class="operation-link">
+      <div class="operation">
+        <img src="@/assets/cobrar-icon.png" alt="Cobrar" class="operation-icon">
+        <p>Cobrar</p>
+      </div>
+    </div>
 
-      <router-link to="/cobrar" class="operation-link">
-        <div class="operation">
-          <img src="@/assets/cobrar-icon.png" alt="Cobrar" class="operation-icon">
-          <p>Cobrar</p>
-        </div>
-      </router-link>
+    <!-- Modal para el enlace de pago -->
+    <PaymentLinkModal :isVisible="isModalVisible" @close="toggleModal" />
+  </div>
 
       <!-- Button to Open Send Modal -->
       <div class="operation" @click="sendModalVisible = true">
@@ -64,6 +69,14 @@ import eyeIcon from '@/assets/eye-icon.png';
 import closedEyeIcon from '@/assets/closed-eye-icon.png';
 import { useAuthStore } from '@/stores/auth.js';
 import SendModal from './SendModal.vue';
+import PaymentLinkModal from '@/components/PaymentLinkModal.vue';
+
+const isModalVisible = ref(false);
+
+// Función para alternar la visibilidad del modal
+const toggleModal = () => {
+  isModalVisible.value = !isModalVisible.value;
+};
 
 const authStore = useAuthStore();
 
