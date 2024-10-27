@@ -2,13 +2,6 @@
   <div class="dashboard-page">
     <Sidebar />
     <div class="dashboard-content">
-      <div class="dashboard-header">
-        <h1>Vista General</h1>
-        <div class="greeting">
-          <h2 class="hello">Bienvenido, </h2>
-          <h2 class="name">{{username}}!</h2>
-        </div>  
-      </div>
       <v-row>
         <v-col cols="12" md="6">
           <div class="Urna">
@@ -18,10 +11,14 @@
             </div>
             <v-row>
               <v-col cols="6">
-                <BalanceCard :balance="balance" :showBalance="showBalance" @update:showBalance="showBalance = $event" />
+                <div class="balance-container">
+                  <BalanceCard :balance="balance" :showBalance="showBalance" @update:showBalance="showBalance = $event" />
+                </div>
               </v-col>
               <v-col cols="6">
-                <ExpenseCard :expenses="expenses" />
+                <div class="balance-container">
+                  <ExpenseCard :expenses="expenses" />
+                </div>
               </v-col>
             </v-row>
           </div>
@@ -44,14 +41,13 @@
               </v-col>
               <v-col cols="4">
                 <div class="operation">
-                  <Enviar />
+                  <Enviar @open-form="showForm" />
+                  <EnviarForm :isVisible="isFormVisible" @close-form="hideForm" />
                   <h2 class="operation-title">Enviar</h2>
                 </div>
               </v-col>
             </v-row>
-            <div class="op-leyend">
-              <p>Cualquier transacción de dinero en Poty es resguardada y asegurada a través de nuestra Urna.</p>
-            </div>
+
           </div>
         </v-col>
       </v-row>
@@ -94,6 +90,8 @@ import Ingresar from '@/components/Ingresar.vue';
 import CreditCard from '@/components/CreditCard.vue';
 import InvestmentSummary from '@/components/InvestmentSummary.vue';
 import TransactionHistory from '@/components/TransactionHistory.vue';
+import EnviarForm from '@/components/EnviarForm.vue';
+
 
 export default {
   name: 'Urna',
@@ -107,17 +105,32 @@ export default {
     CreditCard,
     InvestmentSummary,
     TransactionHistory,
+    EnviarForm,
+
   },
   setup() {
+    const isFormVisible = ref(false);
     const balance = ref('$12,750.60');
     const showBalance = ref(true);
     const expenses = ref('$5,300.00');
     const username = 'James Bond';
+
+    const showForm = () => {
+      isFormVisible.value = true; // Show the form
+    };
+
+    const hideForm = () => {
+      isFormVisible.value = false; // Hide the form
+    };
+
     return {
       balance,
       showBalance,
       expenses,
       username,
+      isFormVisible,
+      showForm,
+      hideForm,
     };
   },
 };
@@ -127,15 +140,20 @@ export default {
 /* Basic page layout styling */
 .dashboard-page {
   display: flex;
-  background-color: #FFFFFF; /* Set background to white */
+  background-color: #0a1a1a; /* Set background to black */
   height: 100%;
-  color: #001E18; /* Change text color to dark for contrast */
+  color: #0a1a1a; /* Change text color to dark for contrast */
 }
 
-/* Main content area */
+/* Main content area with white background and rounded corners */
 .dashboard-content {
   flex: 1;
   padding: 30px;
+  margin-top:70px;
+  margin-bottom:50px;
+  margin-right:50px;
+  background-color: #FFFFFF; /* Set background to white */
+  border-radius: 30px; /* Rounded corners */
 }
 
 /* Styling for each row */
@@ -145,7 +163,8 @@ export default {
 }
 
 .op-leyend {
-  margin-top: 10px;
+  margin-top: 30px;
+  margin-left:30px;
   font-size: 12px;
   color: #333;
 }
@@ -167,20 +186,17 @@ export default {
   display: flex;
   flex-direction: column; 
   align-items: left; 
+  margin-bottom:20px;
 }
 
 .operation {
   display: flex;
   flex-direction: column; 
-  align-items: left; 
+  align-items: center; 
   border-radius: 10px; 
   padding-left: 10px; 
   padding-right: 0px;
   width: 100%; 
-}
-
-.operation-title {
-  padding-left: px; /* Check if you want to add padding */
 }
 
 .dashboard-header {
@@ -194,13 +210,19 @@ export default {
 .section-header {
   display: flex;
   align-items: left;
+  font-size: 25px;
 }
 .greeting {
   display: flex;
-  align-items: center; /* Alinea verticalmente los elementos */
-  justify-content: flex-start; /* Alinea los elementos al inicio sin espacio extra */
+  align-items: center; 
+  justify-content: flex-start;
 }
 .hello {
   font-weight:normal
+}
+.operation-title {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
 }
 </style>

@@ -16,16 +16,17 @@
   
 <style>
 .ingresar-btn {
-    width: 10vw; 
+  width: 10vw; 
     height: 10vw; 
-    max-width: 120px;
-    max-height: 120px; 
+    max-width: 150px;
+    max-height: 150px; 
     background-color: #001E18; 
     color: white; 
     display: flex; 
-    justify-content: center; 
     align-items: center;
     border-radius: 12px;
+    margin:10px;
+
     cursor: pointer; 
     transition: background-color 0.3s; 
 }
@@ -36,8 +37,8 @@
 }
 
 .imagen {
-    width: 60%; 
-    height: 60%;
+    width: 40%; 
+    height: 40%;
     object-fit: contain; 
     margin: auto;
     display: block; 

@@ -45,11 +45,11 @@
     color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 20vw; 
+    width: 18vw; 
     height: 10vw; 
     position: relative; /* Para posicionar el ícono */
-    margin-left: 0px;
-    border-radius: 30px;
+    margin: 10px;
+    border-radius: 10px;
 }
 
 .toggle-eye {

@@ -22,17 +22,15 @@
     color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 20vw; 
+    width: 18vw; 
     height: 10vw; 
     /*max-width: 120px;
     max-height: 120px; */
-    margin-left: 0px;
-    border-radius: 30px;
+    margin: 10px;
+    border-radius: 10px;
 }
 
 .expense-amount {
-    margin-top:20px;
-
     font-size: 3rem; 
 }
 </style>

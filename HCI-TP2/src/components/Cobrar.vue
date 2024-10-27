@@ -16,15 +16,17 @@
   
 <style>
 .cobrar-btn {
-    width: 10vw; 
+  width: 10vw; 
     height: 10vw; 
-    max-width: 120px;
-    max-height: 120px; 
+    max-width: 150px;
+    max-height: 150px; 
     background-color: #001E18; 
     color: white; 
     display: flex; 
     align-items: center;
     border-radius: 12px;
+    margin:10px;
+
     cursor: pointer; 
     transition: background-color 0.3s; 
 }
@@ -35,8 +37,8 @@
 }
 
 .imagen {
-    width: 60%; /* Adjust image width to be smaller */
-    height: 60%; /* Adjust image height to maintain aspect ratio */
+  width: 40%; 
+  height: 40%;
     object-fit: contain; /* Ensures the image is contained within the button */
     margin: auto; /* Centers the image horizontally */
     display: block; /* Ensures the image is centered */
