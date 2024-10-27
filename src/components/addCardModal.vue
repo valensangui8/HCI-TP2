@@ -35,7 +35,7 @@
             v-model="newCard.holder"
             id="holder"
             placeholder="Nombre del titular"
-            required
+            @input="formatHolder"
           />
           <span v-if="errors.holder" class="error-message">{{ errors.holder }}</span>
         </div>
@@ -92,14 +92,41 @@ const newCard = ref({
   expiry: '',
   cvv: '',
   color: '#3498db',
+  bank: '',
 });
 const errors = ref({});
+
+// Lista de bancos con prefijos asociados
+const bankList = [
+  { bank: 'Banco Royale', prefix: '1' },
+  { bank: 'Banco Internacional', prefix: '2' },
+  { bank: 'Banco Nacional', prefix: '3' },
+  { bank: 'Banco de la Gente', prefix: '4' },
+  { bank: 'Banco de la Ciudad', prefix: '5' },
+  { bank: 'Banco de la Provincia', prefix: '6' },
+  { bank: 'Banco de la Capital', prefix: '7' },
+  { bank: 'Banco de la Nación', prefix: '8' },
+  { bank: 'Banco de la Unión', prefix: '9' },
+  { bank: 'Banco Universal', prefix: '0' },
+];
+
+// Función para detectar el banco según el prefijo
+const detectBank = () => {
+  const bank = bankList.find(b => newCard.value.number.startsWith(b.prefix));
+  newCard.value.bank = bank ? bank.bank : '';
+};
+
+const formatHolder = (e) => {
+  newCard.value.holder = e.target.value.toUpperCase()
+    .replace(/[^a-zA-Z ]/g, '')
+};
 
 const formatCardNumber = (e) => {
   newCard.value.number = e.target.value
     .replace(/\D/g, '')
     .replace(/(\d{4})(?=\d)/g, '$1 ')
     .trim();
+  detectBank(); // Llamar a la detección de banco después de formatear
 };
 
 const formatExpiryDate = (e) => {
@@ -140,10 +167,11 @@ const closeModal = () => {
 };
 
 const resetForm = () => {
-  newCard.value = { number: '', holder: '', expiry: '', cvv: '', color: '#3498db' };
+  newCard.value = { number: '', holder: '', expiry: '', cvv: '', color: '#3498db', bank: '' };
   errors.value = {};
 };
 </script>
+
 
 <style scoped>
 .modal-overlay {
