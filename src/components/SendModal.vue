@@ -26,13 +26,16 @@
             </v-radio-group>
           </div>
 
-          <!-- Step 3: Enter payment details -->
+          <!-- Step 3: Enter payment details with CBU validation and maxlength -->
           <div v-if="step === 3">
             <v-text-field
               v-model="paymentDetails"
               :label="paymentMethod === 'link' ? 'Ingrese el Link de Pago' : 'Ingrese el CBU o CVU'"
+              :maxlength="22"
+              :rules="[paymentMethod === 'cbu' ? cbuValidation : () => true]"
               required
               outlined
+              type="number"
             ></v-text-field>
           </div>
 
@@ -129,12 +132,19 @@ export default {
 
     const confirmationDialog = ref(false);
 
+    // Watch prop for modal visibility changes
     watch(
       () => props.visible,
       (newVal) => {
         internalShowModal.value = newVal;
       }
     );
+
+    // CBU validation rule
+    const cbuValidation = (value) => {
+      const is22Digits = /^\d{22}$/.test(value);
+      return is22Digits || 'El CBU debe tener exactamente 22 dígitos';
+    };
 
     const nextStep = () => {
       if (step.value < 4) step.value++;
@@ -161,6 +171,7 @@ export default {
 
     const closeModal = () => {
       internalShowModal.value = false;
+      resetForm();
       emit('update:visible', false); 
     };
 
@@ -183,6 +194,7 @@ export default {
       paymentMethod,
       paymentDetails,
       amount,
+      cbuValidation,
       nextStep,
       prevStep,
       confirmAmount,
