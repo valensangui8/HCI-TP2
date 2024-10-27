@@ -13,41 +13,39 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
 import CreditCard from '@/components/CreditCard.vue';
+import { defineProps, defineEmits } from 'vue';
 
-export default {
-  name: 'EnviarForm',
-  components: {
-    CreditCard,
+const props = defineProps({
+  visible: {
+    type: Boolean,
+    default: false,
   },
-  props: {
-    visible: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup(props, { emit }) {
-    const amount = ref(0);
+});
 
-    const submitDeposit = () => {
-      alert(`Deposit submitted: $${amount.value}`);
-      amount.value = 0; 
-    };
+const emit = defineEmits(['close']);
+const amount = ref(0);
 
-    const closeModal = () => {
-      emit('close'); 
-    };
+const submitDeposit = () => {
+  alert(`Deposit submitted: $${amount.value}`);
+  amount.value = 0; 
+};
 
-    return {
-      amount,
-      submitDeposit,
-      closeModal,
-    };
-  },
+const closeModal = () => {
+  emit('close'); 
 };
 </script>
+
+<template>
+  <div v-if="props.visible">
+    <CreditCard />
+    <input v-model="amount" type="number" placeholder="Enter amount" />
+    <button @click="submitDeposit">Submit Deposit</button>
+    <button @click="closeModal">Close</button>
+  </div>
+</template>
 
 <style scoped>
 .overlay {
