@@ -1,53 +1,76 @@
 <template>
-  <div class="deposit-modal">
-    <div class="modal-content">
-      <button class="close-button" @click="$emit('close')">Cerrar</button>
-      <h2>Ingresar Dinero</h2>
-      <div class="payment-method">
-        <p>Método de Pago</p>
+  <div class="overlay" v-if="visible" @click.self="closeModal">
+    <div class="down-sheet">
+      <h2 style="color: black;">Ingresar Dinero</h2>
+      <div class="creditcard-container">
         <CreditCard />
       </div>
       <label>Por favor, ingrese la cantidad a ingresar</label>
       <input v-model="amount" type="number" placeholder="0,00$" />
       <button @click="submitDeposit">Enviar</button>
+      <button class="close-button" @click="$emit('close')">Cerrar</button>
     </div>
   </div>
 </template>
 
-<script setup>
+<script>
 import { ref } from 'vue';
 import CreditCard from '@/components/CreditCard.vue';
 
-const amount = ref(0);
+export default {
+  name: 'EnviarForm',
+  components: {
+    CreditCard,
+  },
+  props: {
+    visible: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props, { emit }) {
+    const amount = ref(0);
 
-const submitDeposit = () => {
-  alert(`Deposit submitted: $${amount.value}`);
-  amount.value = 0; // Reset amount after submission
+    const submitDeposit = () => {
+      alert(`Deposit submitted: $${amount.value}`);
+      amount.value = 0; 
+    };
+
+    const closeModal = () => {
+      emit('close'); 
+    };
+
+    return {
+      amount,
+      submitDeposit,
+      closeModal,
+    };
+  },
 };
 </script>
 
 <style scoped>
-.deposit-modal {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: flex-end;
+  z-index: 1000;
 }
-
-.modal-content {
-  background: white;
+.down-sheet {
+  width: 100%;
+  max-width: 700px;
+  background-color: white;
   padding: 20px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 400px;
-  position: relative;
+  padding-bottom: 50px;
+  border-radius: 10px 10px 0 0;
+  animation: slide-up 0.3s ease-out;
 }
-
 .close-button {
   position: absolute;
   top: 10px;
@@ -56,5 +79,13 @@ const submitDeposit = () => {
   border: none;
   font-size: 1.2em;
   cursor: pointer;
+}
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 </style>
