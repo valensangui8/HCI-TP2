@@ -92,45 +92,34 @@
     </v-card>
   </template>
   
-  <script>
-  import { defineComponent, toRefs } from 'vue';
+<script setup>
+import { toRefs } from 'vue';
+
+const props = defineProps({
+  avatar: {
+    type: String,
+    required: true,
+  },
+  recipientName: {
+    type: String,
+    required: true,
+  },
+  bankName: {
+    type: String,
+    required: true,
+  },
+  cvu: {
+    type: String,
+    required: true,
+  },
+});
+
+const { avatar, recipientName, bankName, cvu } = toRefs(props);
+</script>
   
-  export default defineComponent({
-    name: 'Destinatario',
-    props: {
-      avatar: {
-        type: String,
-        required: true,
-      },
-      recipientName: {
-        type: String,
-        required: true,
-      },
-      bankName: {
-        type: String,
-        required: true,
-      },
-      cvu: {
-        type: String,
-        required: true,
-      },
-    },
-    setup(props) {
-      const { avatar, recipientName, bankName, cvu } = toRefs(props);
-  
-      return {
-        avatar,
-        recipientName,
-        bankName,
-        cvu,
-      };
-    },
-  });
-  </script>
-  
-  <style scoped>
+<style scoped>
   .text-white {
     color: white !important;
-  }
-  </style>
+}
+</style>
   
