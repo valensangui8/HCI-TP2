@@ -1,22 +1,37 @@
 <template>
-  <div class="deposit-modal">
-    <button class="close-button" @click="$emit('close')">X Cerrar</button>
-    <h2>Ingresar Dinero</h2>
-    <div class="payment-method-section">
-      <h3>Método de Pago</h3>
-      <div class="card">
-        <span>Banco Royale</span>
-        <span class="card-number">0000 0000 0000 0000</span>
-        <span>James Bond</span>
-        <span>03/30</span>
+  <v-dialog v-model="isOpen" max-width="400">
+    <v-card class="pa-4">
+      <v-btn icon @click="$emit('close')" class="close-button">
+        <v-icon>mdi-close</v-icon> Cerrar
+      </v-btn>
+      <v-card-title class="text-primary text-h5 mb-2">Ingresar Dinero</v-card-title>
+      <v-divider></v-divider>
+
+      <div class="payment-method-section mt-4 mb-4">
+        <v-card color="secondary" class="text-center pa-4">
+          <span class="text-h6 text-white">Banco Royale</span>
+          <div class="card-number text-h6 mt-2 mb-2">0000 0000 0000 0000</div>
+          <span class="text-white">James Bond</span>
+          <span class="text-white">03/30</span>
+        </v-card>
       </div>
-    </div>
-    <div class="amount-input">
-      <label>Por favor, ingrese la cantidad a ingresar</label>
-      <input type="number" v-model.number="amount" placeholder="0,00$" />
-    </div>
-    <button @click="submitAmount" class="submit-button">Enviar</button>
-  </div>
+
+      <div class="amount-input mb-4">
+        <label>Por favor, ingrese la cantidad a ingresar</label>
+        <v-text-field 
+          v-model.number="amount"
+          type="number"
+          placeholder="0,00$"
+          class="mt-2"
+          outlined
+          full-width
+          color="terciary"
+        ></v-text-field>
+      </div>
+
+      <v-btn color="terciary" @click="submitAmount" class="submit-button" block>Enviar</v-btn>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup>
@@ -24,6 +39,7 @@ import { ref } from 'vue';
 import { useUserDataStore } from '@/stores/userData';
 
 const amount = ref(0);
+const isOpen = ref(true); // Bind this to open and close the modal
 const userDataStore = useUserDataStore();
 
 function submitAmount() {
@@ -37,86 +53,18 @@ function submitAmount() {
 </script>
 
 <style scoped>
-.deposit-modal {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-}
-
 .close-button {
-  background: none;
-  border: none;
-  font-size: 1.2em;
-  color: #888;
-  cursor: pointer;
+  color: var(--v-theme-primary);
   align-self: flex-end;
-}
-
-h2 {
-  margin-bottom: 10px;
 }
 
 .payment-method-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
-}
-
-.card {
-  background: #4a4a4a;
-  color: white;
-  border-radius: 8px;
-  padding: 15px;
-  width: 100%;
-  text-align: center;
 }
 
 .card-number {
   font-size: 1.2em;
-  margin: 10px 0;
-}
-
-.amount-input {
-  margin: 20px 0;
-}
-
-.amount-input label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input[type="number"] {
-  width: 100%;
-  padding: 10px;
-  font-size: 1.2em;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  text-align: center;
-}
-
-.submit-button {
-  padding: 10px 20px;
-  font-size: 1em;
-  color: white;
-  background-color: #4CAF50;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.submit-button:hover {
-  background-color: #45a049;
 }
 </style>

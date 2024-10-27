@@ -8,7 +8,6 @@
         <InvestmentSummary class="investment-summary flex-grow-2 text-white" />
       </div>
       <TransactionHistory :transactions="transactions" />
-      <span class="bg-surface"> a</span>
     </div>
     
   </div>
