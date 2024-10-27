@@ -94,15 +94,15 @@ const errors = ref({});
 // Lista de bancos con prefijos asociados y su respectivo color
 const bankList = [
   { bank: 'Banco Royale', prefix: '1', color: '#0B0033' },   
-  { bank: 'Banco Internacional', prefix: '2', color: '#1C0B19' }, 
-  { bank: 'Banco Nacional', prefix: '3', color: '#003366' },
-  { bank: 'Banco de la Gente', prefix: '4', color: '#332600' }, 
-  { bank: 'Banco de la Ciudad', prefix: '5', color: '#3D0C02' }, 
-  { bank: 'Banco de la Provincia', prefix: '6', color: '#100B24'} ,
-  { bank: 'Banco de la Capital', prefix: '7', color: '#2B2D42' }, 
-  { bank: 'Banco de la Nación', prefix: '8', color: '#4B0016' }, 
-  { bank: 'Banco de la Unión', prefix: '9', color: '#3D3B2E' }, 
-  { bank: 'Banco Universal', prefix: '0', color: '#14213D' }  
+  { bank: 'Banco Quantum', prefix: '2', color: '#1C0B19' }, 
+  { bank: 'Banco Skyfall', prefix: '3', color: '#003366' },
+  { bank: 'Banco Spectre', prefix: '4', color: '#332600' }, 
+  { bank: 'Banco Golden Eye', prefix: '5', color: '#3D0C02' }, 
+  { bank: 'Banco Thunderball', prefix: '6', color: '#100B24'} ,
+  { bank: 'Banco de Dr. No', prefix: '7', color: '#2B2D42' }, 
+  { bank: 'Banco Moonkraker', prefix: '8', color: '#4B0016' }, 
+  { bank: 'Banco Goldfinger', prefix: '9', color: '#3D3B2E' }, 
+  { bank: 'Banco Bond, James Bond', prefix: '0', color: '#14213D' }  
 ];
 // Función para detectar el banco según el prefijo
 const detectBank = () => {
