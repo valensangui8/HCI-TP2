@@ -12,7 +12,7 @@
         <template #links>
           <div class="login-links">
             <router-link to="/register" class="register-link">¿No tenés cuenta? ¡Registrate!</router-link>
-            <router-link to="/forgot-password" class="forgot-link">Olvidé mi contraseña</router-link>
+            <router-link to="/forgotpassword" class="forgot-link">Olvidé mi contraseña</router-link>
           </div>
         </template>
       </AuthForm>
