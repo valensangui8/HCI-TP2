@@ -46,7 +46,6 @@
           </button>
         </form>
   
-        <!-- Card Preview -->
         <div class="card-preview" :style="{ backgroundColor: '#001E18' }">
           <div class="card-header">
             <img src="@/assets/LogoPotty.png" alt="Logo" class="bank-logo">
@@ -61,51 +60,53 @@
       </div>
     </div>
   </template>
-  <script>
-    import { ref, computed } from 'vue';
-    
-    export default {
-      name: 'AddCardForm',
-      setup() {
-        const cardNumber = ref('');
-        const cardHolder = ref('');
-        const expiryDate = ref('');
-        const cvv = ref('');
-        const isVisible = ref(true); 
-    
-        const formattedCardNumber = computed(() => {
-          return cardNumber.value
-            ? cardNumber.value.replace(/(.{4})/g, '$1 ').trim()
-            : 'XXXX XXXX XXXX XXXX';
-        });
-    
-        // Método para guardar la tarjeta
-        const submitCard = () => {
-          alert('Tarjeta guardada correctamente.');
-          this.$router.push('/Urna');
-          isVisible.value = false;
-           // Cierra el down sheet tras guardar
-        };
-    
-        // Método para cerrar el down sheet
-        const closeSheet = () => {
-            this.$router.push('/Urna');
-            isVisible.value = false;
-        };
-    
-        return {
-          cardNumber,
-          cardHolder,
-          expiryDate,
-          cvv,
-          isVisible,
-          formattedCardNumber,
-          submitCard,
-          closeSheet,
-        };
-      },
+<script>
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+export default {
+  name: 'AddCardForm',
+  props: {
+    isVisible: {
+      type: Boolean,
+      default: true,
+    }
+  },
+  setup(props, { emit }) {
+    const router = useRouter();
+    const cardNumber = ref('');
+    const cardHolder = ref('');
+    const expiryDate = ref('');
+    const cvv = ref('');
+
+    const formattedCardNumber = computed(() => {
+      return cardNumber.value
+        ? cardNumber.value.replace(/(.{4})/g, '$1 ').trim()
+        : 'XXXX XXXX XXXX XXXX';
+    });
+
+    const submitCard = () => {
+      alert('Tarjeta guardada correctamente.');
+      router.push('/Urna');
+      emit('close');
     };
-    </script>
+
+    const closeSheet = () => {
+      emit('close');
+    };
+
+    return {
+      cardNumber,
+      cardHolder,
+      expiryDate,
+      cvv,
+      formattedCardNumber,
+      submitCard,
+      closeSheet
+    };
+  }
+};
+</script>
   <style scoped>
   .overlay {
     position: fixed;

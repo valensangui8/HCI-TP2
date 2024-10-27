@@ -1,6 +1,5 @@
 <template>
   <div class="credit-card-container">
-    <!-- Si no hay tarjetas, muestra el botón para agregar -->
     <div v-if="cards.length === 0" class="add-card">
       <button @click="addCard">+ Ingresar Tarjeta</button>
     </div>
@@ -23,7 +22,7 @@
                 </v-btn>
               </template>
               <v-list>
-                <v-list-item @click="addCard(currentCardIndex)">
+                <v-list-item @click="addCard()">
                   <v-list-item-title>Agregar Nueva Tarjeta</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="deleteCard(currentCardIndex)">
@@ -43,8 +42,9 @@
       </div>
       <button class="nav-arrow right-arrow" @click="nextCard">›</button>
     </div>
-  <AddCardForm
+    <AddCardForm
       v-if="isAddCardFormVisible"
+      @close="isAddCardFormVisible = false"
     />
   </div>
 </template>
@@ -55,6 +55,9 @@ import AddCardForm from '@/components/AddCardForm.vue'; // Adjust the path as ne
 export default {
   
   name: 'CreditCard',
+  components: {
+    AddCardForm
+  },
   data() {
     return {
       currentCardIndex: 0, // Índice para la tarjeta actual
@@ -79,9 +82,7 @@ export default {
   },
   methods: {
     addCard() {
-      alert("Función para agregar una tarjeta.");
-      this.$router.push('/AddCard');
-
+      this.isAddCardFormVisible = true;
     },
     editCard(index) {
       alert(`Editar tarjeta: ${index}`);
