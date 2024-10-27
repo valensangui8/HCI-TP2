@@ -2,7 +2,6 @@
 <div class="overlay" v-if="isVisible" @click.self="closeModal">
   <div class="down-sheet">
       <h2  style="color: black;">Agregar Nueva Tarjeta</h2>
-      <!-- Previsualización de la tarjeta -->
       <div class="card-preview" :style="{ backgroundColor: newCard.color }">
         <div class="card-content">
           <div class="card-bank">{{ newCard.bank || 'Banco' }}</div>
@@ -16,7 +15,6 @@
       </div>
 
       <form @submit.prevent="submitForm">
-        <!-- Form fields -->
         <div class="form-field">
           <label for="number">Número de Tarjeta</label>
           <input
@@ -64,11 +62,7 @@
           <span v-if="errors.cvv" class="error-message">{{ errors.cvv }}</span>
         </div>
 
-        <div class="form-field">
-          <label for="color">Color</label>
-          <input v-model="newCard.color" id="color" type="color" />
-        </div>
-
+        
         <button type="submit" class="submit-button">Agregar Tarjeta</button>
         <button type="button" @click="closeModal" class="cancel-button">Cancelar</button>
       </form>
@@ -79,6 +73,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useUserCardsStore } from '@/stores/CardsStore';
+import { color } from 'chart.js/helpers';
 
 const props = defineProps({
   isVisible: Boolean,
@@ -96,24 +91,24 @@ const newCard = ref({
 });
 const errors = ref({});
 
-// Lista de bancos con prefijos asociados
+// Lista de bancos con prefijos asociados y su respectivo color
 const bankList = [
-  { bank: 'Banco Royale', prefix: '1' },
-  { bank: 'Banco Internacional', prefix: '2' },
-  { bank: 'Banco Nacional', prefix: '3' },
-  { bank: 'Banco de la Gente', prefix: '4' },
-  { bank: 'Banco de la Ciudad', prefix: '5' },
-  { bank: 'Banco de la Provincia', prefix: '6' },
-  { bank: 'Banco de la Capital', prefix: '7' },
-  { bank: 'Banco de la Nación', prefix: '8' },
-  { bank: 'Banco de la Unión', prefix: '9' },
-  { bank: 'Banco Universal', prefix: '0' },
+  { bank: 'Banco Royale', prefix: '1', color: '#0B0033' },   
+  { bank: 'Banco Internacional', prefix: '2', color: '#1C0B19' }, 
+  { bank: 'Banco Nacional', prefix: '3', color: '#003366' },
+  { bank: 'Banco de la Gente', prefix: '4', color: '#332600' }, 
+  { bank: 'Banco de la Ciudad', prefix: '5', color: '#3D0C02' }, 
+  { bank: 'Banco de la Provincia', prefix: '6', color: '#100B24'} ,
+  { bank: 'Banco de la Capital', prefix: '7', color: '#2B2D42' }, 
+  { bank: 'Banco de la Nación', prefix: '8', color: '#4B0016' }, 
+  { bank: 'Banco de la Unión', prefix: '9', color: '#3D3B2E' }, 
+  { bank: 'Banco Universal', prefix: '0', color: '#14213D' }  
 ];
-
 // Función para detectar el banco según el prefijo
 const detectBank = () => {
   const bank = bankList.find(b => newCard.value.number.startsWith(b.prefix));
   newCard.value.bank = bank ? bank.bank : '';
+  newCard.value.color = bank ? bank.color : "#3498db";
 };
 
 const formatHolder = (e) => {
