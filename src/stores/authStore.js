@@ -18,6 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
       lastName: 'García',
       email: 'maria@example.com',
       password: '12',
+      balance: 1299,
     }
   ];
 

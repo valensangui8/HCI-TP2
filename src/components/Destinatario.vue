@@ -80,10 +80,13 @@
           <span class="subtitle-2 text-white">{{ bankName }}</span>
         </div>
       </v-card-title>
-  
-      <v-card-text class="text-center">
-        <h5 class="text-subtitle-1 text-white">CVU: {{ cvu }}</h5>
-      </v-card-text>
+    <v-card-text class="text-center" v-if="cvu">
+      <h5 class="text-subtitle-1 text-white">CVU: {{ cvu }}</h5>
+    </v-card-text>
+
+    <v-card-text class="text-center" v-if="link">
+      <h5 class="text-subtitle-1 text-white">Link de pago: {{ link }}</h5>
+    </v-card-text>
     </v-card>
   </template>
   
@@ -101,8 +104,12 @@ const props = defineProps({
   },
   cvu: {
     type: String,
-    required: true,
+    required: false,
   },
+  link:{
+    type: String,
+    required: false,
+  }
 });
 
 const { avatar, recipientName, bankName, cvu } = toRefs(props);
