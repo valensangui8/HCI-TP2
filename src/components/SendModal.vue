@@ -3,18 +3,12 @@
     <div class="down-sheet">
       <h2 style="color: black;">Enviar Dinero</h2>
       <form class="form-fields" @submit.prevent>
-
         
         <div v-if="step === 1">
           <v-radio-group v-model="paymentMethod" class="text-center">
             <v-radio label="Link de Pago" value="link" class="black-text"></v-radio>
             <v-radio label="CBU o CVU" value="cbu" class="black-text"></v-radio>
           </v-radio-group>
-          <v-btn @click="nextStep" class="custom-btn" :disabled="!paymentMethodValid"> Siguiente</v-btn>
-          <v-btn @click="prevStep" class="mr-2" outlined>Cerrar</v-btn>
-        </div>
-
-        <div v-if="step === 2">
           <v-text-field
             v-model="paymentDetails"
             :label="paymentMethod === 'link' ? 'Ingrese el Link de Pago' : 'Ingrese el CBU o CVU'"
@@ -23,11 +17,11 @@
             required
             outlined
             type="input"/>
-          <v-btn @click="nextStep" class="custom-btn" :disabled="!isPaymentDetailsValid">Siguiente</v-btn>
-          <v-btn @click="prevStep" class="mr-2" outlined>Anterior</v-btn>
+          <v-btn @click="nextStep" class="custom-btn" :disabled="!isPaymentDetailsValid"> Siguiente</v-btn>
+          <v-btn @click="prevStep" class="mr-2" outlined>Cerrar</v-btn>
         </div>
 
-        <div v-if="step === 3" class="center-container">
+        <div v-if="step === 2" class="center-container">
           <div class="step">
             <div class="component-container">
              
@@ -64,11 +58,7 @@
                 type="number"
                 label="Monto ($)"
                 placeholder="Ingrese el monto"
-                :rules="[
-                  value => !!value || 'El monto es obligatorio',
-                  value => value > 0 || 'El monto debe ser positivo',
-                  value => !isAmountExceedingBalance || 'El monto ingresado excede el dinero disponible'
-                ]"
+                :rules=formRules
                 required
                 class="input"
               />
@@ -90,7 +80,6 @@
     </div>
   </div>
 
-  <!-- Confirmation Dialog -->
   <v-dialog v-model="confirmationDialog" max-width="400">
     <v-card>
       <v-card-title class="headline">Confirmación de Pago</v-card-title>
@@ -121,16 +110,21 @@ const internalShowModal = ref(props.visible);
 const step = ref(1);
 const isCardView = ref(false);
 
-const paymentMethod = ref('');
+const paymentMethod = ref('link');
 const paymentDetails = ref('');
 const description = ref('');
 const amount = ref(0);
 const authStore = useAuthStore();
 
-// Recipient information
-const recipientAvatar = 'https://cdn.vuetifyjs.com/images/john.jpg';
 const recipientName = 'Juan Pérez';
 const recipientBank = 'Banco Nación';
+
+
+ const formRules = computed(() => [
+  value => !!value || 'El monto es obligatorio',
+  value => value > 0 || 'El monto debe ser positivo',
+  value => (isCardView.value || !isAmountExceedingBalance.value) || 'El monto ingresado excede el dinero disponible'
+]);
 
 const isPaymentDetailsValid = computed(() => {
   if (paymentMethod.value === 'cbu') {
@@ -202,7 +196,6 @@ const closeDialog = () => {
 
 const computedCvu = computed(() => (paymentMethod.value === 'cbu' ? paymentDetails.value : null));
 const computedLink = computed(() => (paymentMethod.value === 'link' ? paymentDetails.value : null));
-const paymentMethodValid = computed(() => paymentMethod.value === 'cbu' || paymentMethod.value === 'link');
 
 
 // Helper for amount limit based on balance
