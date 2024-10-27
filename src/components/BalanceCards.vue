@@ -30,15 +30,21 @@
       </div>
     </div>
 
-    <!-- Operations Section -->
-    <div class="operations">
-      <router-link to="/ingresar" class="operation-link">
-        <div class="operation">
-          <img src="@/assets/ingresar-icon.png" alt="Ingresar" class="operation-icon">
-          <p>Ingresar</p>
-        </div>
-      </router-link>
-      <div>
+     <!-- Operations Section -->
+  <div class="operations">
+    <!-- Botón para abrir el modal de "Ingresar" -->
+      <!-- Botón para abrir el modal de "Ingresar" -->
+      <div class="operation-link" @click="showDepositModal = true">
+      <div class="operation">
+        <img src="@/assets/ingresar-icon.png" alt="Ingresar" class="operation-icon">
+        <p>Ingresar</p>
+      </div>
+    </div>
+
+    <!-- Modal de Ingreso de Dinero -->
+    <DepositModal :visible="showDepositModal" @close="showDepositModal = false" />
+  
+
     <!-- Botón para abrir el modal de "Cobrar" -->
     <div @click="toggleModal" class="operation-link">
       <div class="operation">
@@ -49,18 +55,18 @@
 
     <!-- Modal para el enlace de pago -->
     <PaymentLinkModal :isVisible="isModalVisible" @close="toggleModal" />
-  </div>
 
-      <!-- Button to Open Send Modal -->
-      <div class="operation" @click="sendModalVisible = true">
-        <img src="@/assets/enviar-icon.png" alt="Enviar" class="operation-icon">
-        <p>Enviar</p>
-      </div>
+    <!-- Botón para abrir el modal de "Enviar" -->
+    <div class="operation" @click="sendModalVisible = true">
+      <img src="@/assets/enviar-icon.png" alt="Enviar" class="operation-icon">
+      <p>Enviar</p>
     </div>
-
-    <!-- Send Modal -->
-    <SendModal v-model:visible="sendModalVisible" />
   </div>
+
+  <!-- Modales -->
+  <DepositModal v-if="showDepositModal" @close="showDepositModal = false" />
+  <SendModal v-model:visible="sendModalVisible" />
+</div>
 </template>
 
 <script setup>
@@ -71,12 +77,18 @@ import { useAuthStore } from '@/stores/authStore';
 import SendModal from './SendModal.vue';
 import PaymentLinkModal from '@/components/PaymentLinkModal.vue';
 
+import DepositModal from '@/components/DepositModal.vue';
+
+
+const showDepositModal = ref(false);
 const isModalVisible = ref(false);
 
 // Función para alternar la visibilidad del modal
 const toggleModal = () => {
   isModalVisible.value = !isModalVisible.value;
 };
+
+
 
 const authStore = useAuthStore();
 
