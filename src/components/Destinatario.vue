@@ -73,12 +73,7 @@
     <v-card
       class="mx-auto pa-4 d-flex flex-column align-center"
       color="primary"
-      width="300"
-    >
-      <v-avatar size="32" class="mb-2">
-        <v-img :src="avatar" alt="Avatar"></v-img>
-      </v-avatar>
-  
+      width="300">  
       <v-card-title class="justify-center py-0">
         <div class="text-center">
           <h4 class="text-h6 text-white mb-1">{{ recipientName }}</h4>
@@ -96,10 +91,6 @@
 import { toRefs } from 'vue';
 
 const props = defineProps({
-  avatar: {
-    type: String,
-    required: true,
-  },
   recipientName: {
     type: String,
     required: true,

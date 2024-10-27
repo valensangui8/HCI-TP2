@@ -56,7 +56,7 @@
                   />
                 </div>
                 <div class="balance-container" v-else>
-                   <p>Dinero disponible: ${{balance}}</p> 
+                   <p>Dinero disponible: {{formattedBalance}}</p> 
                 </div>
               </div>
               <div class="form-fields">
@@ -83,153 +83,123 @@
   <v-card>
     <v-card-title class="headline">Confirmación de Pago</v-card-title>
     <v-card-text>
-      El pago ha sido exitoso. ¿Desea continuar con otra transacción?
+      El pago ha sido exitoso/
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="primary" @click="confirmationDialog = false">Aceptar</v-btn>
+    
       <v-btn color="secondary" @click="closeDialog">Cerrar</v-btn>
     </v-card-actions>
   </v-card>
 </v-dialog>
 </template>
 
-<script>
-import { ref, watch } from 'vue';
+
+<script setup>
+import { ref, watch, computed } from 'vue';
 import Destinatario from '@/components/Destinatario.vue';
 import CreditCard from '@/components/CreditCard.vue';
-import BalanceCards from './BalanceCards.vue';
-export default {
-  name: 'SendModal',
-  props: {
-    visible: {
-      type: Boolean,
-      default: false,
-    },
+
+const props = defineProps({
+  visible: {
+    type: Boolean,
+    default: false,
   },
-  components: {
-    Destinatario,
-    CreditCard,
-  },
-  setup(props, { emit }) {
-    const isCardView = ref(true);
-    const internalShowModal = ref(props.visible);
-    const step = ref(1);
-    const accountOrCard = ref('');
-    const paymentMethod = ref('');
-    const paymentDetails = ref('');
-    const amount = ref(0);
+});
+const emit = defineEmits(['update:visible']);
 
-    const recipientAvatar = 'https://cdn.vuetifyjs.com/images/john.jpg';
-    const recipientName = 'Juan Pérez';
-    const recipientBank = 'Banco Nación';
-    const recipientCvu = '20-12345678-9';
-    const cardType = 'Visa';
-    const cardNumber = '**** **** **** 1234';
-    const balance = ref(0);
-    const confirmationDialog = ref(false);
 
-    // Watch prop for modal visibility changes
-    watch(
-      () => props.visible,
-      (newVal) => {
-        internalShowModal.value = newVal;
-      }
-    );
+const isCardView = ref(true);
+const internalShowModal = ref(props.visible);
+const step = ref(1);
+const accountOrCard = ref('');
+const paymentMethod = ref('');
+const paymentDetails = ref('');
+const amount = ref(0);
 
-    // CBU validation rule
-    const cbuValidation = (value) => {
-      const is22Digits = /^\d{22}$/.test(value);
-      return is22Digits || 'El CBU debe tener exactamente 22 dígitos';
-    };
+const recipientAvatar = 'https://cdn.vuetifyjs.com/images/john.jpg';
+const recipientName = 'Juan Pérez';
+const recipientBank = 'Banco Nación';
+const recipientCvu = '20-12345678-9';
+const cardType = 'Visa';
+const cardNumber = '**** **** **** 1234';
+const balance = ref(0);
+const confirmationDialog = ref(false);
 
-    const nextStep = () => {
-      if (step.value < 4) step.value++;
-    };
+watch(
+  () => props.visible,
+  (newVal) => {
+    internalShowModal.value = newVal;
+  }
+);
 
-    const prevStep = () => {
-      if (step.value > 1) step.value--;
-    };
-
-    const confirmAmount = () => {
-      confirmationDialog.value = true;
-      resetForm();
-    };
-
-    const resetForm = () => {
-      step.value = 1;
-      accountOrCard.value = '';
-      paymentMethod.value = '';
-      paymentDetails.value = '';
-      amount.value = 0;
-      internalShowModal.value = false;
-      emit('update:visible', false); 
-    };
-
-    const closeModal = () => {
-      internalShowModal.value = false;
-      resetForm();
-      emit('update:visible', false); 
-    };
-
-    const closeDialog = () => {
-      confirmationDialog.value = false;
-    };
-
-    const goBack = () => {
-      if (step.value > 1) {
-        step.value--;
-      } else {
-        closeModal();
-      }
-    };
-    const showCard = () => {
-      isCardView.value = true; // Show credit card view
-    };
-
-    const showBalance = () => {
-      isCardView.value = false; // Show balance view
-    };
-    const formattedBalance = computed(() => {
-      const balance = authStore.currentUser?.balance || 0;
-      return '$${balance.toFixed(2)}';
-    });
-    return {
-      internalShowModal,
-      step,
-      accountOrCard,
-      paymentMethod,
-      paymentDetails,
-      amount,
-      cbuValidation,
-      nextStep,
-      prevStep,
-      confirmAmount,
-      recipientAvatar,
-      recipientName,
-      recipientBank,
-      recipientCvu,
-      cardType,
-      cardNumber,
-      confirmationDialog,
-      closeDialog,
-      closeModal,
-      goBack,
-      showCard,
-      showBalance,
-      isCardView,
-      balance,
-    };
-  },
+const cbuValidation = (value) => {
+  const is22Digits = /^\d{22}$/.test(value);
+  return is22Digits || 'El CBU debe tener exactamente 22 dígitos';
 };
+
+const nextStep = () => {
+  if (step.value < 4) step.value++;
+};
+
+const prevStep = () => {
+  if (step.value > 1) step.value--;
+};
+
+const confirmAmount = () => {
+  confirmationDialog.value = true;
+  resetForm();
+};
+
+const resetForm = () => {
+  step.value = 1;
+  accountOrCard.value = '';
+  paymentMethod.value = '';
+  paymentDetails.value = '';
+  amount.value = 0;
+  internalShowModal.value = false;
+  emit('update:visible', false); 
+};
+
+const closeModal = () => {
+  internalShowModal.value = false;
+  resetForm();
+  emit('update:visible', false); 
+};
+
+const closeDialog = () => {
+  confirmationDialog.value = false;
+};
+
+const goBack = () => {
+  if (step.value > 1) {
+    step.value--;
+  } else {
+    closeModal();
+  }
+};
+
+const showCard = () => {
+  isCardView.value = true;
+};
+
+const showBalance = () => {
+  isCardView.value = false; 
+};
+
+const formattedBalance = computed(() => {
+  const currentBalance = balance.value || 0;
+  return `$${currentBalance.toFixed(2)}`;
+});
 </script>
+
 
 <style scoped>
   .center-container {
       display: flex;
-      justify-content: center; /* Centra horizontalmente */
-      align-items: center; /* Centra verticalmente */
-      height: 70vh; /* Ajusta la altura del contenedor */
+      justify-content: center; 
+      align-items: center; 
+      height: 70vh; 
   }
   .overlay {
     position: fixed;
