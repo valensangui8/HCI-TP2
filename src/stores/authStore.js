@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useAuthStore = defineStore('auth', () => {
-  // Datos iniciales de usuarios, solo usados si localStorage no tiene datos
+  // Datos iniciales de usuarios con balance invertido e historial de inversiones agregado
   const initialUsers = [
     {
       id: 1,
@@ -11,9 +11,6 @@ export const useAuthStore = defineStore('auth', () => {
       lastName: 'Pérez',
       email: 'juan@example.com',
       password: 'password123',
-      balance: 0,
-      cards: [],
-      transactions: [],
     },
     {
       id: 2,
@@ -21,17 +18,12 @@ export const useAuthStore = defineStore('auth', () => {
       lastName: 'García',
       email: 'maria@example.com',
       password: '12',
-      balance: 0,
-      cards: [],
-      transactions: [],
     }
   ];
 
-  // Crear los refs para usuarios y usuario actual
   const users = ref([]);
   const currentUser = ref(null);
 
-  // Cargar datos desde localStorage, o inicializar si no existen
   const loadFromLocalStorage = () => {
     const storedUsers = JSON.parse(localStorage.getItem('users'));
     const storedCurrentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -39,7 +31,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (storedUsers) {
       users.value = storedUsers;
     } else {
-      users.value = initialUsers; // Solo usa initialUsers si no hay nada en localStorage
+      users.value = initialUsers;
       saveToLocalStorage();
     }
 
@@ -48,7 +40,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  // Guardar datos en localStorage
   const saveToLocalStorage = () => {
     localStorage.setItem('users', JSON.stringify(users.value));
     localStorage.setItem('currentUser', JSON.stringify(currentUser.value));
@@ -60,8 +51,10 @@ export const useAuthStore = defineStore('auth', () => {
 
     newUser.id = users.value.length + 1;
     newUser.balance = 0;
+    newUser.investedBalance = 0;
     newUser.cards = [];
     newUser.transactions = [];
+    newUser.investHistory = [];
     users.value.push(newUser);
     saveToLocalStorage();
     return true;
@@ -69,7 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const login = (credentials) => {
     const user = users.value.find(
-      user => (user.email === credentials.email) && (user.password === credentials.password)
+      user => user.email === credentials.email && user.password === credentials.password
     );
     if (user) {
       currentUser.value = user;
@@ -84,20 +77,7 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('currentUser');
   };
 
-  const addCard = (newCard) => {
-    if (currentUser.value) {
-      currentUser.value.cards.push(newCard);
-      saveToLocalStorage();
-    }
-  };
-
-  const removeCard = (cardId) => {
-    if (currentUser.value) {
-      currentUser.value.cards = currentUser.value.cards.filter(card => card.id !== cardId);
-      saveToLocalStorage();
-    }
-  };
-
+  // Métodos de balance e inversión
   const updateBalance = (amount) => {
     if (currentUser.value) {
       currentUser.value.balance += amount;
@@ -105,7 +85,34 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  // Cargar desde localStorage al iniciar la store
+  const investBalance = (amount) => {
+    if (currentUser.value && currentUser.value.balance >= amount) {
+      currentUser.value.balance -= amount;
+      currentUser.value.investedBalance += amount;
+      // Registrar en el historial de inversiones
+      currentUser.value.investHistory.push({
+        type: 'inversión',
+        amount,
+        date: new Date().toLocaleString(),
+      });
+      saveToLocalStorage();
+    }
+  };
+
+  const withdrawInvestment = (amount) => {
+    if (currentUser.value && currentUser.value.investedBalance >= amount) {
+      currentUser.value.investedBalance -= amount;
+      currentUser.value.balance += amount;
+      // Registrar en el historial de inversiones
+      currentUser.value.investHistory.push({
+        type: 'retiro',
+        amount,
+        date: new Date().toLocaleString(),
+      });
+      saveToLocalStorage();
+    }
+  };
+
   loadFromLocalStorage();
 
   return {
@@ -114,9 +121,9 @@ export const useAuthStore = defineStore('auth', () => {
     register,
     login,
     logout,
-    addCard,
-    removeCard,
     updateBalance,
+    investBalance,
+    withdrawInvestment,
     loadFromLocalStorage,
     saveToLocalStorage,
   };
