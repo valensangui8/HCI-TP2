@@ -1,14 +1,26 @@
 <template>
   <div class="overlay" v-if="visible" @click.self="closeModal">
     <div class="down-sheet">
-      <h2 style="color: black;">Ingresar Dinero</h2>
-      <div class="creditcard-container">
-        <CreditCard />
+      <h2>Ingresar Dinero</h2>
+      <div class="components container">
+        <div class="creditcard-container">
+          <CreditCard />
+        </div>
+        <label>Por favor, ingrese el monto a ingresar</label>
+        <div class="form-fields">
+          <v-text-field
+            v-model.number="amount"
+            type="number"
+            label="Monto ($)"
+            placeholder="Ingrese el monto"
+            prepend-icon="mdi-cash"
+            :rules="[value => !!value || 'El monto es obligatorio']"
+            required
+            class="input"
+          />
+        </div>
+        <v-btn @click="submitDeposit" :disabled="amount <= 0" class="custom-btn">Ingresar</v-btn>
       </div>
-      <label>Por favor, ingrese la cantidad a ingresar</label>
-      <input v-model="amount" type="number" placeholder="0,00$" />
-      <button @click="submitDeposit">Enviar</button>
-      <button class="close-button" @click="$emit('close')">Cerrar</button>
     </div>
   </div>
 </template>
@@ -29,8 +41,8 @@ const emit = defineEmits(['close']);
 const amount = ref(0);
 
 const submitDeposit = () => {
-  alert(`Deposit submitted: $${amount.value}`);
   amount.value = 0; 
+  closeModal();
 };
 
 const closeModal = () => {
@@ -41,6 +53,7 @@ const closeModal = () => {
 
 
 <style scoped>
+
 .overlay {
   position: fixed;
   top: 0;
@@ -59,8 +72,13 @@ const closeModal = () => {
   background-color: white;
   padding: 20px;
   padding-bottom: 50px;
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px;
   animation: slide-up 0.3s ease-out;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  
 }
 .close-button {
   position: absolute;
@@ -78,5 +96,28 @@ const closeModal = () => {
   to {
     transform: translateY(0);
   }
+}
+.components-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  
+  gap: 15px;
+  
+}
+.creditcard-container {
+  margin-bottom: 20px; 
+  
+}
+.custom-btn{
+    background-color: #001E18;
+    color:white;
+    border-radius: 10px;
+    padding:5px;
+    margin-left:80px;
+}
+.h2{
+  color: black;
 }
 </style>
