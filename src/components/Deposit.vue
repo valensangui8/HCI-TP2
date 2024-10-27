@@ -36,7 +36,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useUserDataStore } from '@/stores/userData';
+import { useUserDataStore } from '@/stores/DataStore';
 
 const amount = ref(0);
 const isOpen = ref(true); // Bind this to open and close the modal

@@ -3,8 +3,11 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import { registerPlugins } from './plugins';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '@/stores/authStore';
 
+
+// Limpia localStorage al iniciar la aplicación
+//localStorage.clear(); 
 const app = createApp(App);
 
 // Registramos todos los plugins (vuetify, pinia, router)

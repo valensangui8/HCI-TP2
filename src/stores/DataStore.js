@@ -1,6 +1,5 @@
-// stores/userData.js
 import { defineStore } from 'pinia';
-import { useAuthStore } from './auth';
+import { useAuthStore } from './authStore';
 import { computed } from 'vue';
 
 export const useUserDataStore = defineStore('userData', () => {

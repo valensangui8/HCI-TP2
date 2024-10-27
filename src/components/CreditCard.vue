@@ -28,7 +28,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useUserCardsStore } from '@/stores/userCards';
+import { useUserCardsStore } from '@/stores/CardsStore';
 import AddCardModal from '@/components/addCardModal.vue';
 
 const userCardsStore = useUserCardsStore();

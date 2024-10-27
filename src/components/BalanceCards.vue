@@ -67,7 +67,7 @@
 import { ref, computed } from 'vue';
 import eyeIcon from '@/assets/eye-icon.png';
 import closedEyeIcon from '@/assets/closed-eye-icon.png';
-import { useAuthStore } from '@/stores/auth.js';
+import { useAuthStore } from '@/stores/authStore';
 import SendModal from './SendModal.vue';
 import PaymentLinkModal from '@/components/PaymentLinkModal.vue';
 

@@ -9,23 +9,19 @@
       </div>
       <TransactionHistory :transactions="transactions" />
     </div>
-      
   </div>
 </template>
 
-
-
 <script setup>
-import { useAuthStore } from '@/stores/auth';
-import { useUserDataStore } from '@/stores/userData';
+import { useAuthStore } from '@/stores/authStore';
+import { useUserDataStore } from '@/stores/DataStore';
 import { useTransactionStore } from '@/stores/transactions';
 import Navbar from '@/components/Navbar.vue';
 import BalanceCards from '@/components/BalanceCards.vue';
 import CreditCard from '@/components/CreditCard.vue';
 import InvestmentSummary from '@/components/InvestmentSummary.vue';
 import TransactionHistory from '@/components/TransactionHistory.vue';
-import { useTheme } from 'vuetify';
-import SendModal from '@/components/SendModal.vue';
+
 
 const authStore = useAuthStore();
 const userDataStore = useUserDataStore();

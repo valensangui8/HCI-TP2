@@ -30,7 +30,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import AuthForm from '@/components/AuthForm.vue';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '@/stores/authStore';
 
 const fields = ref([
   { name: 'name', type: 'text', label: 'Nombre', placeholder: 'Ingresa tu nombre' },

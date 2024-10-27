@@ -1,4 +1,3 @@
-
 <template>
   <div class="dashboard-page d-flex flex-column bg-white">
     <Navbar />
@@ -14,8 +13,8 @@
 </template>
 
 <script setup>
-import { useAuthStore } from '@/stores/auth';
-import { useUserDataStore } from '@/stores/userData';
+import { useAuthStore } from '@/stores/authStore';
+import { useUserDataStore } from '@/stores/DataStore';
 import { useTransactionStore } from '@/stores/transactions';
 import Navbar from '@/components/Navbar.vue';
 import BalanceCards from '@/components/BalanceCards.vue';

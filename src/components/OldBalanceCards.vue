@@ -50,7 +50,7 @@
 import { ref, computed } from 'vue';
 import eyeIcon from '@/assets/eye-icon.png';
 import closedEyeIcon from '@/assets/closed-eye-icon.png';
-import { useUserDataStore } from '@/stores/userData';
+import { useUserDataStore } from '@/stores/DataStore';
 
 const userDataStore = useUserDataStore();
 

@@ -28,7 +28,7 @@ import Navbar from '@/components/Navbar.vue';
 import CreditCard from '@/components/CreditCard.vue';
 import AddCardModal from '@/components/addCardModal.vue';
 import { ref, computed } from 'vue';
-import { useUserCardsStore } from '@/stores/userCards';
+import { useUserCardsStore } from '@/stores/CardsStore';
 
 const userCardsStore = useUserCardsStore();
 const cards = computed(() => userCardsStore.cards);

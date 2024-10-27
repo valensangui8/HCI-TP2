@@ -22,7 +22,7 @@
 
 <script setup>
 import { computed } from 'vue';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '@/stores/authStore';
 
 // Accedemos al store de autenticación
 const authStore = useAuthStore();

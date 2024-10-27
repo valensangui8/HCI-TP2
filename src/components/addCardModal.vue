@@ -2,7 +2,6 @@
   <div v-if="isVisible" class="modal-overlay">
     <div class="modal">
       <h2>Agregar Nueva Tarjeta</h2>
-
       <!-- Previsualización de la tarjeta -->
       <div class="card-preview" :style="{ backgroundColor: newCard.color }">
         <div class="card-content">
@@ -13,11 +12,11 @@
             <span>{{ newCard.expiry || 'MM/YY' }}</span>
             <span class="card-cvv">{{ newCard.cvv || '*CVV' }}</span>
           </div>
-          
         </div>
       </div>
 
       <form @submit.prevent="submitForm">
+        <!-- Form fields -->
         <div class="form-field">
           <label for="number">Número de Tarjeta</label>
           <input
@@ -79,7 +78,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useUserCardsStore } from '@/stores/userCards';
+import { useUserCardsStore } from '@/stores/CardsStore';
 
 const props = defineProps({
   isVisible: Boolean,
@@ -96,32 +95,11 @@ const newCard = ref({
 });
 const errors = ref({});
 
-// Array de bancos con prefijos de números de tarjeta
-const bankList = [
-  { bank: 'Banco Royale', prefix: '1' },
-  { bank: 'Banco Internacional', prefix: '2' },
-  { bank: 'Banco Nacional', prefix: '3' },
-  { bank: 'Banco de la Gente', prefix: '4' },
-  { bank: 'Banco de la Ciudad', prefix: '5' },
-  { bank: 'Banco de la Provincia', prefix: '6' },
-  { bank: 'Banco de la Capital', prefix: '7' },
-  { bank: 'Banco de la Nación', prefix: '8' },
-  { bank: 'Banco de la República', prefix: '9' },
-  { bank: 'Banco de la Unión', prefix: '0' },
-];
-
-// Detectar banco en función de los primeros dígitos de la tarjeta
-const detectBank = () => {
-  const bank = bankList.find(b => newCard.value.number.startsWith(b.prefix));
-  newCard.value.bank = bank ? bank.bank : '';
-};
-
 const formatCardNumber = (e) => {
   newCard.value.number = e.target.value
     .replace(/\D/g, '')
     .replace(/(\d{4})(?=\d)/g, '$1 ')
     .trim();
-  detectBank(); // Llamar a la detección de banco después de formatear
 };
 
 const formatExpiryDate = (e) => {
