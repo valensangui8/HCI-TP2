@@ -4,12 +4,13 @@
       <h2 style="color: black;">Enviar Dinero</h2>
       <form class="form-fields" @submit.prevent>
 
+        
         <div v-if="step === 1">
           <v-radio-group v-model="paymentMethod" class="text-center">
             <v-radio label="Link de Pago" value="link" class="black-text"></v-radio>
             <v-radio label="CBU o CVU" value="cbu" class="black-text"></v-radio>
           </v-radio-group>
-          <v-btn v-if="step < 3" @click="nextStep" class="custom-btn" :disabled="!paymentMethodValid"> Siguiente</v-btn>
+          <v-btn @click="nextStep" class="custom-btn" :disabled="!paymentMethodValid"> Siguiente</v-btn>
           <v-btn @click="prevStep" class="mr-2" outlined>Cerrar</v-btn>
         </div>
 
