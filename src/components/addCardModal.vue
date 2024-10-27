@@ -91,18 +91,18 @@ const newCard = ref({
 });
 const errors = ref({});
 
-// Lista de bancos con prefijos asociados
+// Lista de bancos con prefijos asociados y su respectivo color
 const bankList = [
-  { bank: 'Banco Royale', prefix: '1', color: '#0B0033' },   // Dark Indigo
-  { bank: 'Banco Internacional', prefix: '2', color: '#1C0B19' }, // Deep Burgundy
-  { bank: 'Banco Nacional', prefix: '3', color: '#003366' }, // Navy Blue
-  { bank: 'Banco de la Gente', prefix: '4', color: '#332600' }, // Dark Olive
-  { bank: 'Banco de la Ciudad', prefix: '5', color: '#3D0C02' }, // Dark Brick Red
-  { bank: 'Banco de la Provincia', prefix: '6', color: '#100B24' }, // Charcoal
-  { bank: 'Banco de la Capital', prefix: '7', color: '#2B2D42' }, // Dark Slate Blue
-  { bank: 'Banco de la Nación', prefix: '8', color: '#4B0016' }, // Dark Maroon
-  { bank: 'Banco de la Unión', prefix: '9', color: '#3D3B2E' }, // Olive Brown
-  { bank: 'Banco Universal', prefix: '0', color: '#14213D' }  // Dark Royal Blue
+  { bank: 'Banco Royale', prefix: '1', color: '#0B0033' },   
+  { bank: 'Banco Internacional', prefix: '2', color: '#1C0B19' }, 
+  { bank: 'Banco Nacional', prefix: '3', color: '#003366' },
+  { bank: 'Banco de la Gente', prefix: '4', color: '#332600' }, 
+  { bank: 'Banco de la Ciudad', prefix: '5', color: '#3D0C02' }, 
+  { bank: 'Banco de la Provincia', prefix: '6', color: '#100B24'} ,
+  { bank: 'Banco de la Capital', prefix: '7', color: '#2B2D42' }, 
+  { bank: 'Banco de la Nación', prefix: '8', color: '#4B0016' }, 
+  { bank: 'Banco de la Unión', prefix: '9', color: '#3D3B2E' }, 
+  { bank: 'Banco Universal', prefix: '0', color: '#14213D' }  
 ];
 // Función para detectar el banco según el prefijo
 const detectBank = () => {
