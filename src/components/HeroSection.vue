@@ -1,7 +1,7 @@
 <template>
   <section class="hero bg-white">
     <h1>Ahora podés <span>confiar</span>, tu dinero está en <span>Poty</span>.</h1>
-    <router-link to="/register" class="cta-btn bg-primary">Comenzar</router-link>
+    <router-link to="/register" class="cta-btn ">Comenzar</router-link>
   </section>
 </template>
 
