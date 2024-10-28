@@ -25,6 +25,8 @@
 <script setup>
 import { ref } from 'vue';
 import AuthForm from '@/components/AuthForm.vue';
+import { useAuthStore } from '@/stores/authStore';
+import { useRouter } from 'vue-router';
 
 const fields = ref([
   { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' , maxLength: 50},
@@ -32,9 +34,27 @@ const fields = ref([
   { name: 'confirmPassword', type: 'password', label: 'Confirmar Nueva Contraseña', placeholder: 'Confirma tu nueva contraseña', maxLength: 50 },
 ]);
 
+const authStore = useAuthStore();
+const router = useRouter();
+
 const handleForgotPassword = (formData) => {
-  //arreglar
+  if (formData.newPassword !== formData.confirmPassword) {
+    alert('Las contraseñas no coinciden');
+    return;
+  }
+
+  const success = authStore.changePassword({
+    email: formData.email,
+    password: formData.newPassword
+  });
+
+  if (success) {
+    router.push('/login');
+  } else {
+    alert('Correo no registrado');
+  }
 };
+
 </script>
 
 <style scoped>

@@ -150,8 +150,25 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
 
+  const changePassword = (credentials) => {
+    const user = users.value.find(
+      user => user.email === credentials.email
+    );
+  
+    if (user) {
+      // Actualiza la contraseña en el usuario encontrado
+      user.password = credentials.password;
+  
+      // Guarda los cambios en localStorage
+      saveToLocalStorage();
+  
+      return true;
+    }
+    
+    return false;
+  };
 
-  console.log('transactions: ', currentUser.transactions);
+
 
   loadFromLocalStorage();
 
@@ -169,5 +186,6 @@ export const useAuthStore = defineStore('auth', () => {
     netGains,
     newTransaction,
     updateExpenses,
+    changePassword,
   };
 });
