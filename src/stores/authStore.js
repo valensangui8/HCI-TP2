@@ -10,7 +10,11 @@ export const useAuthStore = defineStore('auth', () => {
       name: 'Juan',
       lastName: 'Pérez',
       email: 'juan@example.com',
-      password: 'password123',
+      password: '12',
+      balance: 0,
+      investedBalance: 0,
+      transactions: [],
+      investHistory: [],
     },
     {
       id: 2,
@@ -18,7 +22,10 @@ export const useAuthStore = defineStore('auth', () => {
       lastName: 'García',
       email: 'maria@example.com',
       password: '12',
-      balance: 1299,
+      balance: 0,
+      investedBalance: 0,
+      transactions: [],
+      investHistory: [],
     }
   ];
 
@@ -81,8 +88,8 @@ export const useAuthStore = defineStore('auth', () => {
   // Métodos de balance e inversión
   const updateBalance = (amount) => {
     if (currentUser.value) {
-      currentUser.value.balance += amount;
-      saveToLocalStorage();
+      currentUser.value.balance = (currentUser.value.balance || 0) + amount;
+      saveToLocalStorage(); // Guardar cambios en el local storage
     }
   };
 
@@ -90,12 +97,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (currentUser.value && currentUser.value.balance >= amount) {
       currentUser.value.balance -= amount;
       currentUser.value.investedBalance += amount;
-      // Registrar en el historial de inversiones
-      currentUser.value.investHistory.push({
-        type: 'inversión',
-        amount,
-        date: new Date().toLocaleString(),
-      });
+      newTransaction(-amount, "Inversión");
       saveToLocalStorage();
     }
   };
@@ -104,15 +106,43 @@ export const useAuthStore = defineStore('auth', () => {
     if (currentUser.value && currentUser.value.investedBalance >= amount) {
       currentUser.value.investedBalance -= amount;
       currentUser.value.balance += amount;
-      // Registrar en el historial de inversiones
+      newTransaction(amount, 'Rescate de Inversión');
+
+      // Registrar en `investHistory` y `transactions`
       currentUser.value.investHistory.push({
         type: 'retiro',
         amount,
         date: new Date().toLocaleString(),
       });
+      
       saveToLocalStorage();
     }
   };
+
+  const dailyNetGainRate = 0.11;
+
+  const netGains = computed(() => {
+    return currentUser.value ? currentUser.value.investedBalance * dailyNetGainRate : 0;
+  });
+
+  const newTransaction = (amount, description) => {
+    if (currentUser.value) {
+      // Verifica y asegura que `transactions` esté inicializado
+      if (!currentUser.value.transactions) {
+        currentUser.value.transactions = [];
+      }
+      
+      currentUser.value.transactions.push({
+        amount,
+        description,
+        date: new Date().toLocaleString(),
+      });
+      
+      saveToLocalStorage();
+    }
+  };
+
+  console.log('transactions: ', currentUser.transactions);
 
   loadFromLocalStorage();
 
@@ -127,5 +157,7 @@ export const useAuthStore = defineStore('auth', () => {
     withdrawInvestment,
     loadFromLocalStorage,
     saveToLocalStorage,
+    netGains,
+    newTransaction,
   };
 });

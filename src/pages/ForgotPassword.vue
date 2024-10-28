@@ -33,7 +33,7 @@ const fields = ref([
 ]);
 
 const handleForgotPassword = (formData) => {
-  console.log('Datos de recuperación:', formData);
+  //arreglar
 };
 </script>
 

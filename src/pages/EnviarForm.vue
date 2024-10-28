@@ -34,10 +34,7 @@
                   />
                 </div>
                 <div class="creditcard-container">
-                  <credit-card
-                    :cardType="cardType"
-                    :cardNumber="cardNumber"
-                  />
+                  <credit-card/>
                 </div>
               </div>
   

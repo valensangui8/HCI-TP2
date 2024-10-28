@@ -37,6 +37,7 @@ const currentCardIndex = ref(0);
 const isModalVisible = ref(false);
 
 const isAddCardVisible = computed(() => currentCardIndex.value >= userCards.value.length);
+
 const currentCard = computed(() => userCards.value[currentCardIndex.value] || {});
 
 const prevCard = () => {

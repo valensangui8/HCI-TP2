@@ -42,10 +42,8 @@
               </div>
 
               <div class="creditcard-container" v-if="isCardView">
-                  <credit-card
-                    :cardType="cardType"
-                    :cardNumber="cardNumber"
-                  />
+                  <credit-card/>
+              
                 </div>
               <div class="balance-container" v-else>
                    <p>Dinero disponible: {{formattedBalance}}</p> 
@@ -170,7 +168,9 @@ const prevStep = () => {
 };
 
 const confirmAmount = () => {
-  authStore.updateBalance(-amount.value);
+  if(!isCardView){
+    authStore.updateBalance(-amount.value);
+  }
   confirmationDialog.value = true;
   resetForm();
 };
