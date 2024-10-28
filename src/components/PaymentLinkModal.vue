@@ -42,7 +42,6 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
   isVisible: Boolean,
