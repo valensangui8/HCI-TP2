@@ -188,21 +188,21 @@ const resetForm = () => {
 .modal {
   background: white;
   color: black;
-  padding: 30px;
-  border-radius: 15px;
-  width: 400px;
+  padding: 2vw;
+  border-radius: 1.5vw;
+  width: 40vw;
   max-width: 90%;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3vw 4vw rgba(0, 0, 0, 0.3);
 }
 
 .card-preview {
-  padding: 20px;
-  border-radius: 12px;
+  padding: 1vw;
+  border-radius: 0.8vw;
   width: 100%;
-  max-width: 320px;
-  margin: 20px auto;
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  max-width: 16vw;
+  margin: 2vw auto;
+  box-shadow: 0 1vw 1vw rgba(0, 0, 0, 0.2);
   color: white;
   text-align: left;
 }
@@ -214,50 +214,50 @@ const resetForm = () => {
 }
 
 .card-number {
-  font-size: 1.4rem;
-  letter-spacing: 2px;
-  margin: 10px 0;
+  font-size: 1vw;
+  letter-spacing: 0.1vw;
+  margin: 0.6vw;
 }
 
 .card-holder {
-  font-size: 1rem;
-  margin-top: 8px;
+  font-size: 0.8vw;
+  margin-top: 0.5vw;
 }
 
 .card-footer {
   display: flex;
   justify-content: flex-start;
-  font-size: 0.9rem;
+  font-size: 0.7vw;
 }
 
 .card-cvv {
   margin-left: auto;
-  bottom: 10px;
-  right: 15px;
+  bottom: 0.7vw;
+  right: 1vw;
   font-size: 0.9rem;
   font-weight: bold;
   color: white;
 }
 
 .form-field {
-  margin-bottom: 15px;
+  margin-bottom: 0.3vw;
 }
 
 .form-field label {
   display: block;
-  margin-bottom: 5px;
-  font-size: 0.9rem;
+  margin-bottom: 0.2vw;
+  font-size: 0.8vw;
   color: black;
 }
 
 input {
   width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  padding: 1vw;
+  border-radius: 0.5vw;
+  border: 0.2vw solid #ccc;
   background-color: #f9f9f9;
   color: black;
-  font-size: 1rem;
+  font-size: 0.8vw;
 }
 
 input::placeholder {
@@ -266,18 +266,18 @@ input::placeholder {
 
 .error-message {
   color: #ff4d4f;
-  font-size: 0.8rem;
+  font-size: 0.4vw;
 }
 
 .submit-button {
   background-color: #001E18;
   color: white;
+  padding: 0.7vw 1vw;
+  margin-top: 0.9vw;
+  border-radius: 0.3vw;
   border: none;
-  padding: 12px 20px;
-  margin-top: 15px;
   cursor: pointer;
-  border-radius: 5px;
-  font-size: 1rem;
+  font-size: 0.8vw;
 }
 
 .submit-button:hover {
@@ -287,13 +287,14 @@ input::placeholder {
 .cancel-button {
   background-color: #001E18;
   color: white;
-  padding: 12px 20px;
-  margin-top: 15px;
-  margin-left: 10px;
-  border-radius: 5px;
+  padding: 0.7vw 1vw;
+  margin-top: 0.9vwpx;
+  margin-left: 1vw;
+  margin-right:1.5vw;
+  border-radius: 0.3vw;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.8vw;
 }
 
 .cancel-button:hover {
@@ -315,11 +316,11 @@ input::placeholder {
   
   .down-sheet {
     width: 100%;
-    max-width: 700px;
+    max-width: 40vw;
     background-color: white;
-    padding: 20px;
-    padding-bottom: 50px;
-    border-radius: 10px 10px 0 0;
+    padding: 4vw;
+    padding-bottom: 4vw;
+    border-radius: 2vw 2vw 0 0;
     animation: slide-up 0.3s ease-out;
   }
   @keyframes slide-up {

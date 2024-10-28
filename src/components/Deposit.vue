@@ -1,70 +1,58 @@
 <template>
-  <v-dialog v-model="isOpen" max-width="400">
-    <v-card class="pa-4">
-      <v-btn icon @click="$emit('close')" class="close-button">
-        <v-icon>mdi-close</v-icon> Cerrar
-      </v-btn>
-      <v-card-title class="text-primary text-h5 mb-2">Ingresar Dinero</v-card-title>
-      <v-divider></v-divider>
-
-      <div class="payment-method-section mt-4 mb-4">
-        <v-card color="secondary" class="text-center pa-4">
-          <span class="text-h6 text-white">Banco Royale</span>
-          <div class="card-number text-h6 mt-2 mb-2">0000 0000 0000 0000</div>
-          <span class="text-white">James Bond</span>
-          <span class="text-white">03/30</span>
-        </v-card>
-      </div>
-
-      <div class="amount-input mb-4">
-        <label>Por favor, ingrese la cantidad a ingresar</label>
-        <v-text-field 
-          v-model.number="amount"
-          type="number"
-          placeholder="0,00$"
-          class="mt-2"
-          outlined
-          full-width
-          color="terciary"
-        ></v-text-field>
-      </div>
-
-      <v-btn color="terciary" @click="submitAmount" class="submit-button" block>Enviar</v-btn>
-    </v-card>
-  </v-dialog>
+  <div class="operation-btn" @click="showDepositModal = true">
+    <div class="operation">
+      <img src="@/assets/ingresar-icon.png" alt="Ingresar" class="operation-icon">
+      <p>Ingresar</p>
+    </div>
+  </div>
+  <DepositModal :visible="showDepositModal" @close="showDepositModal = false" />
+  <DepositModal v-if="showDepositModal" @close="showDepositModal = false" />
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useUserDataStore } from '@/stores/DataStore';
-
-const amount = ref(0);
-const isOpen = ref(true); // Bind this to open and close the modal
-const userDataStore = useUserDataStore();
-
-function submitAmount() {
-  if (amount.value > 0) {
-    userDataStore.updateBalance(amount.value);
-    amount.value = 0; // Reset amount after submission
-  } else {
-    alert("Please enter a valid amount.");
-  }
-}
+  import { ref, computed } from 'vue';
+  import { useAuthStore } from '@/stores/authStore';
+  import DepositModal from '@/components/DepositModal.vue';
+  const showDepositModal = ref(false);
+  const authStore = useAuthStore();
 </script>
 
 <style scoped>
-.close-button {
-  color: var(--v-theme-primary);
-  align-self: flex-end;
-}
-
-.payment-method-section {
+.operation {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  background-color: #1a3a3a;
+  padding: 1vw;
+  border-radius: 0.5vw;
+  width: 5vw;
+  height: 5vw;
+  cursor: pointer;
 }
 
-.card-number {
-  font-size: 1.2em;
+.operation p {
+  color: white;
+  font-size: 1vw;
+  margin-top: 0.5;
+  text-align: center;
+}
+
+.operation-icon {
+  width: 1.8vw;
+  height: 1.8vw;
+}
+
+.operation-btn {
+  text-decoration: none;
+  color: inherit;
+}
+
+.operation-link:hover {
+  text-decoration: none;
+}
+
+.operation:hover {
+  transform: scale(1.05);
 }
 </style>
