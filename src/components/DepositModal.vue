@@ -41,7 +41,6 @@
 <script setup>
 import { ref } from 'vue';
 import CreditCard from '@/components/CreditCard.vue';
-import { defineProps, defineEmits } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 
 const props = defineProps({
@@ -61,8 +60,9 @@ const submitDeposit = () => {
     authStore.updateBalance(amount.value);
     confirmationDialog.value = true;
     closeModal();
+    authStore.newTransaction(amount.value, 'Deposito');
   }
-  
+
 };
 
 const closeDialog = () => {

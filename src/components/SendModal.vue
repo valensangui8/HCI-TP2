@@ -167,10 +167,10 @@ const prevStep = () => {
 };
 
 const confirmAmount = () => {
-  if(!isCardView){
+  if(!isCardView.value){
     authStore.updateBalance(amount.value);
-    
   }
+  authStore.newTransaction(amount.value, description.value);
   confirmationDialog.value = true;
   resetForm();
 };
@@ -181,6 +181,7 @@ const resetForm = () => {
   paymentDetails.value = '';
   amount.value = 0;
   internalShowModal.value = false;
+  description.value = '';
   emit('update:visible', false); 
 };
 
