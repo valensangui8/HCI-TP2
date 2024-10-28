@@ -19,14 +19,15 @@
   const withdrawalAmount = ref(0);
   
   const investFunds = () => {
-    if (investmentAmount.value > 0 && investmentAmount.value <= authStore.currentUser.balance) {
-      authStore.investBalance(investmentAmount.value);
-      investmentAmount.value = 0;
-      alert('Inversión realizada con éxito.');
-    } else {
-      alert('Monto no válido o insuficiente.');
-    }
-  };
+  if (investmentAmount.value > 0 && investmentAmount.value <= authStore.currentUser.balance) {
+    authStore.investBalance(investmentAmount.value);
+    investmentAmount.value = 0; // Restablecer el monto
+    
+  } else {
+    alert('Monto no válido o insuficiente.');
+  }
+};
+
   
   const withdrawFunds = () => {
     if (withdrawalAmount.value > 0 && withdrawalAmount.value <= authStore.currentUser.investedBalance) {

@@ -30,6 +30,7 @@ import { useRouter } from 'vue-router';
 import AuthForm from '@/components/AuthForm.vue';
 import { useAuthStore } from '@/stores/authStore';
 
+
 const fields = ref([
   { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' },
   { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' },
@@ -42,6 +43,9 @@ const handleLogin = (formData) => {
   const success = authStore.login(formData);
   if (success) {
     router.push('/dashboard');
+    setTimeout(() => {
+      location.reload();
+    }, 500);
   } else {
     alert('Credenciales incorrectas. Intenta de nuevo.');
   }
