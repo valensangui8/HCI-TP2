@@ -11,7 +11,6 @@ declare module 'vue' {
     AppFooter: typeof import('./src/components/AppFooter.vue')['default']
     AuthForm: typeof import('./src/components/AuthForm.vue')['default']
     Balance: typeof import('./src/components/Balance.vue')['default']
-    BalanceCards: typeof import('./src/components/BalanceCards.vue')['default']
     BalanceInfo: typeof import('./src/components/BalanceInfo.vue')['default']
     CreditCard: typeof import('./src/components/CreditCard.vue')['default']
     Deposit: typeof import('./src/components/Deposit.vue')['default']
@@ -22,8 +21,6 @@ declare module 'vue' {
     InfoSection: typeof import('./src/components/InfoSection.vue')['default']
     InvestmentForm: typeof import('./src/components/InvestmentForm.vue')['default']
     InvestmentSummary: typeof import('./src/components/InvestmentSummary.vue')['default']
-    MiddleLanding: typeof import('./src/components/MiddleLanding.vue')['default']
-    MoneyCard: typeof import('./src/components/MoneyCard.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     Payment: typeof import('./src/components/Payment.vue')['default']
     PaymentLinkModal: typeof import('./src/components/PaymentLinkModal.vue')['default']
@@ -32,5 +29,6 @@ declare module 'vue' {
     Send: typeof import('./src/components/Send.vue')['default']
     SendModal: typeof import('./src/components/SendModal.vue')['default']
     TransactionHistory: typeof import('./src/components/TransactionHistory.vue')['default']
+    RecieverPayment: typeof import('./src/components/RecieverPayment.vue')['default']
   }
 }

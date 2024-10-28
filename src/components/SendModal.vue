@@ -25,7 +25,7 @@
             <div class="component-container">
              
               <div class="destinatario-container">
-                <destinatario
+                <RecieverPayment
                   :recipientName="recipientName"
                   :bankName="recipientBank"
                   :cvu="computedCvu"
@@ -92,9 +92,9 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue';
-import Destinatario from '@/components/Destinatario.vue';
 import CreditCard from '@/components/CreditCard.vue';
 import { useAuthStore } from '@/stores/authStore';
+import RecieverPayment from '@/components/RecieverPayment.vue';
 
 const props = defineProps({
   visible: {

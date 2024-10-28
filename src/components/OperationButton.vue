@@ -1,7 +1,6 @@
 <template>
     <router-link :to="link" class="operation-link">
       <div class="operation">
-        <!-- <img :src="icon" :alt="text" class="operation-icon"> -->
         <img :src="icon" :alt="text" class="operation-icon">
         
         <p>{{ text }}</p>

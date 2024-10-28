@@ -78,7 +78,7 @@
   
   <script>
   import { ref } from 'vue';
-  import Destinatario from '@/components/Destinatario.vue';
+  import Destinatario from '@/components/RecieverPayment.vue';
   import CreditCard from '@/components/CreditCard.vue';
   import { useRouter } from 'vue-router';
   
