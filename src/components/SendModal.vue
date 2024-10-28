@@ -273,4 +273,18 @@ const formattedBalance = computed(() => {
     transform: translateY(0);
   }
 }
+
+.toggle-card-money-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0; /* Adjusts spacing */
+}
+
+.center-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 </style>
