@@ -118,7 +118,7 @@ onMounted(() => {
 
 <style scoped>
 .summary-container {
-  width: 100%;
+  width: 5vw;
 }
 
 .net-gains {
@@ -130,8 +130,8 @@ onMounted(() => {
 }
 
 .chart {
-  width: 100%;
-  height: 200px;
+  width: 5vw;
+  height: 16vw;
 }
 
 .net-gains p {
