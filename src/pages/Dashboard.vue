@@ -5,7 +5,6 @@
       <BalanceCards />
       <div class="additional-content d-flex justify-space-between mt-5" style="height: 200px;">
         <CreditCard class="credit-card-container text-white" />
-        <!-- Pasar propiedades a InvestmentSummary -->
         <InvestmentSummary
           class="investment-summary flex-grow-2 text-white"
           :netGains="authStore.investBalance"

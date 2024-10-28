@@ -1,39 +1,39 @@
 <template>
-  <div v-if="isVisible" class="modal-overlay" @click.self="handleOverlayClick">
-    <div class="modal">
+  <div class="overlay" v-if="isVisible" @click.self="closeModal">
+    <div class="down-sheet">
       <h2>Generar Enlace de Pago</h2>
-
-      <!-- Campo para ingresar el monto a cobrar -->
-      <div class="form-field">
-        <label for="amount">Monto a Cobrar</label>
-        <div class="input-wrapper">
-          <span class="currency-symbol">$</span>
-          <input
-            type="text"
-            id="amount"
+      <div class="components-container">
+        
+        <!-- Amount Input Field -->
+        <label for="amount">Por favor, ingrese el monto a cobrar</label>
+        <div class="form-fields">
+          <v-text-field
             v-model="amount"
+            type="text"
+            label="Monto ($)"
+            placeholder="Ingrese el monto"
+            prepend-icon="mdi-cash"
+            :rules="[value => !!value || 'El monto es obligatorio']"
+            required
+            class="input"
             @input="formatAmount"
-            placeholder="Ingresa el monto"
           />
         </div>
-      </div>
 
-      <!-- Mostrar el enlace generado o los botones para generarlo y cancelar -->
-      <div v-if="paymentLink">
-        <p>Enlace de Pago:</p>
-        <div class="payment-link">{{ paymentLink }}</div>
-      </div>
-
-      <!-- Botones para generar enlace o cancelar -->
-      <div v-else class="action-buttons">
-        <button @click="generateLink" class="submit-button">Generar Enlace</button>
-        <button @click="cancel" class="cancel-button">Cancelar</button>
-      </div>
-
-      <!-- Botones de Compartir y Cerrar después de generar el enlace -->
-      <div v-if="paymentLink" class="action-buttons">
-        <button @click="shareLink" class="share-button">Compartir</button>
-        <button @click="closeModal" class="cancel-button">Cerrar</button>
+        <!-- Action Buttons -->
+        <div v-if="!paymentLink" class="action-buttons">
+          <v-btn @click="generateLink" :disabled="amount <= 0" class="custom-btn">Generar Enlace</v-btn>
+        </div>
+        
+        <!-- Display Payment Link and Sharing Options -->
+        <div v-if="paymentLink">
+          <p>Enlace de Pago:</p>
+          <div class="payment-link">{{ paymentLink }}</div>
+          <div class="action-buttons">
+            <v-btn @click="closeModal" class="cancel-button">Cerrar</v-btn>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -42,6 +42,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
   isVisible: Boolean,
@@ -62,17 +63,7 @@ const generateLink = () => {
   }
 };
 
-const shareLink = () => {
-  if (navigator.share) {
-    navigator.share({
-      title: 'Enlace de Pago',
-      text: 'Aquí tienes el enlace para realizar el pago:',
-      url: paymentLink.value,
-    }).catch(console.error);
-  } else {
-    alert("Tu navegador no soporta la función de compartir.");
-  }
-};
+
 
 const closeModal = () => {
   amount.value = '';
@@ -80,67 +71,63 @@ const closeModal = () => {
   emit('close');
 };
 
-// Función para el botón de cancelar
 const cancel = () => {
   closeModal();
-};
-
-// Función para manejar el clic fuera del modal y redirigir
-const handleOverlayClick = () => {
-  closeModal();
-  router.push('/dashboard');
 };
 </script>
 
 <style scoped>
-.modal-overlay {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   z-index: 1000;
 }
 
-.modal {
-  background: #ffffff;
-  color: black;
-  padding: 30px;
-  border-radius: 10px;
-  width: 500px;
-  max-width: 90%;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.form-field {
-  position: relative;
-  margin-bottom: 20px;
-}
-
-.input-wrapper {
-  position: relative;
-}
-
-.currency-symbol {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.1rem;
-  color: gray;
-}
-
-input {
+.down-sheet {
   width: 100%;
-  padding: 12px 12px 12px 30px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  font-size: 1.1rem;
+  max-width: 700px;
+  background-color: white;
+  padding: 20px;
+  padding-bottom: 50px;
+  border-radius: 10px;
+  animation: slide-up 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.components-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.form-fields {
+  width: 100%;
+  max-width: 500px; /* Same width as other elements */
+}
+
+.input .v-text-field__slot {
+  width: 100%;
 }
 
 .payment-link {
@@ -152,30 +139,46 @@ input {
   color: #333;
 }
 
-.submit-button,
-.cancel-button,
-.share-button {
-  background-color: #28a745;
+.custom-btn {
+  background-color: #001E18;
   color: white;
-  border: none;
-  padding: 12px 20px;
-  margin-top: 15px;
-  border-radius: 5px;
+  border-radius: 10px;
+  padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.submit-button:hover {
+.custom-btn:hover {
   background-color: #218838;
 }
 
 .cancel-button {
   background-color: #e74c3c;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .cancel-button:hover {
   background-color: #c0392b;
+}
+
+.share-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.share-button:hover {
+  background-color: #0056b3;
 }
 
 .action-buttons {
