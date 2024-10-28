@@ -255,16 +255,8 @@ const formattedBalance = computed(() => {
   border-radius: 5px;
   margin: 20px;
 }
-.button-container {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 35px;
-}
-.error-message {
-  color: #ff4d4f;
-  font-size: 0.9rem;
-  margin-top: 5px;
-}
+
+
 @keyframes slide-up {
   from {
     transform: translateY(100%);
