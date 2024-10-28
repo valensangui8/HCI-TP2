@@ -214,7 +214,12 @@ const formattedBalance = computed(() => {
 </script>
 
 <style scoped>
-
+.creditcard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
 .overlay {
   position: fixed;
   top: 0;
