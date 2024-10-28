@@ -27,10 +27,13 @@
         showBalance.value = !showBalance.value;
     };
     
-    const formattedBalance = computed(() => {
-        const balance = authStore.currentUser?.balance || 0;
-        return `$${balance.toFixed(2)}`;
-    });
+    // Computed balance and expenses formatting
+const formattedBalance = computed(() => {
+  const balance = authStore.currentUser?.balance || 0;
+  return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(balance);
+});
+
+
 
 </script>
 

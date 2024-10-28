@@ -170,7 +170,8 @@ const confirmAmount = () => {
   if(!isCardView.value){
     authStore.updateBalance(-amount.value);
   }
-  authStore.newTransaction(amount.value, description.value);
+  authStore.newTransaction(-amount.value, description.value);
+  authStore.updateExpenses(amount.value);
   confirmationDialog.value = true;
   resetForm();
 };

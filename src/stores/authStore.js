@@ -85,6 +85,13 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('currentUser');
   };
 
+  const updateExpenses = (amount) => {
+    if (currentUser.value) {
+      currentUser.value.expenses = (currentUser.value.expenses || 0) + amount;
+      saveToLocalStorage();
+    }
+  }
+
   // Métodos de balance e inversión
   const updateBalance = (amount) => {
     if (currentUser.value) {
@@ -142,6 +149,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
+
+
   console.log('transactions: ', currentUser.transactions);
 
   loadFromLocalStorage();
@@ -159,5 +168,6 @@ export const useAuthStore = defineStore('auth', () => {
     saveToLocalStorage,
     netGains,
     newTransaction,
+    updateExpenses,
   };
 });

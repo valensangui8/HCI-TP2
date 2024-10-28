@@ -6,7 +6,7 @@
           <v-col cols="12" md="6">
             <div class="Urna">
               <div class="urna-header">
-                <h1 class="section-header">Balance</h1>
+                <h1 class="section-header"> Saldos </h1>
                 <!-- <p class="urna-description">¿Qué es mi Urna?</p> -->
               </div>
               <v-row>
@@ -82,12 +82,10 @@
   
   
   <script setup>
-    import { ref, computed } from 'vue';
     import { useAuthStore } from '@/stores/authStore';
     import { useUserDataStore } from '@/stores/DataStore';
     import { useTransactionStore } from '@/stores/transactions';
     import Navbar from '@/components/Navbar.vue';
-    import BalanceCards from '@/components/BalanceCards.vue';
     import CreditCard from '@/components/CreditCard.vue';
     import InvestmentSummary from '@/components/InvestmentSummary.vue';
     import TransactionHistory from '@/components/TransactionHistory.vue';

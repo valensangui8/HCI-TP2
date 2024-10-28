@@ -23,10 +23,11 @@
     const toggleExpenses = () => {
         showExpenses.value = !showExpenses.value;
     };
-    const formattedExpenses = computed(() => {
-        const expenses = authStore.currentUser?.expenses || 0;
-        return `$${expenses.toLocaleString()}`;
-    });
+    
+const formattedExpenses = computed(() => {
+  const expenses = authStore.currentUser?.expenses || 0;
+  return `$${expenses.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+});
 </script>
 <style scoped>
 .expenses-card {
