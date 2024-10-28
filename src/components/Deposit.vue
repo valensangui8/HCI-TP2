@@ -26,8 +26,8 @@
   background-color: #1a3a3a;
   padding: 1vw;
   border-radius: 0.5vw;
-  width: 5vw;
-  height: 5vw;
+  width: 9vw;
+  height: 9vw;
   cursor: pointer;
 }
 
