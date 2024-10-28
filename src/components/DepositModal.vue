@@ -13,22 +13,34 @@
             type="number"
             label="Monto ($)"
             placeholder="Ingrese el monto"
-            prepend-icon="mdi-cash"
+            
             :rules="[value => !!value || 'El monto es obligatorio']"
             required
             class="input"
           />
         </div>
         <v-btn @click="submitDeposit" :disabled="amount <= 0" class="custom-btn">Ingresar</v-btn>
+        
+    
+      
       </div>
     </div>
   </div>
+  <v-dialog v-model="confirmationDialog" max-width="400">
+        <v-card>
+          <v-card-title class="headline">Confirmación de Ingreso</v-card-title>
+            <v-card-text>El ingreso de dinero ha sido exitoso</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="secondary" @click="closeDialog">Cerrar</v-btn>
+              </v-card-actions>
+            </v-card>
+  </v-dialog>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import CreditCard from '@/components/CreditCard.vue';
-import { defineProps, defineEmits } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 
 const props = defineProps({
@@ -41,16 +53,25 @@ const props = defineProps({
 const emit = defineEmits(['close']);
 const amount = ref(0);
 const authStore = useAuthStore();
+const confirmationDialog = ref(false);
 
 const submitDeposit = () => {
   if (amount.value > 0) {
-    authStore.updateBalance(amount.value); // Actualiza el balance en la store
-    amount.value = 0; 
+    authStore.updateBalance(amount.value);
+    confirmationDialog.value = true;
     closeModal();
+    authStore.newTransaction(amount.value, 'Deposito');
   }
+
 };
 
+const closeDialog = () => {
+  confirmationDialog.value = false;
+
+}
+
 const closeModal = () => {
+  amount.value = 0; 
   emit('close'); 
 };
 </script>

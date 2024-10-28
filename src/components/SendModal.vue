@@ -18,7 +18,6 @@
             outlined
             type="input"/>
           <v-btn @click="nextStep" class="custom-btn" :disabled="!isPaymentDetailsValid"> Siguiente</v-btn>
-          <v-btn @click="prevStep" class="mr-2" outlined>Cerrar</v-btn>
         </div>
 
         <div v-if="step === 2" class="center-container">
@@ -67,7 +66,8 @@
                 outlined
               />
               <v-btn @click="prevStep" class="mr-2" outlined>Anterior</v-btn>
-              <v-btn :disabled="isAmountExceedingBalance || amount <= 0" color="primary" @click="confirmAmount">Enviar</v-btn>
+              <v-btn :disabled="(!isCardView && isAmountExceedingBalance) || amount <= 0" color="primary" @click="confirmAmount">Enviar</v-btn>
+
             </div>
           </div>
         </div>
@@ -121,8 +121,7 @@ const recipientBank = 'Banco Nación';
  const formRules = computed(() => [
   value => !!value || 'El monto es obligatorio',
   value => value > 0 || 'El monto debe ser positivo',
-  value => (isCardView.value || !isAmountExceedingBalance.value) || 'El monto ingresado excede el dinero disponible'
-]);
+  value => (isCardView.value ? true : !isAmountExceedingBalance.value) || 'El monto ingresado excede el dinero disponible']);
 
 const isPaymentDetailsValid = computed(() => {
   if (paymentMethod.value === 'cbu') {
@@ -168,9 +167,10 @@ const prevStep = () => {
 };
 
 const confirmAmount = () => {
-  if(!isCardView){
-    authStore.updateBalance(-amount.value);
+  if(!isCardView.value){
+    authStore.updateBalance(amount.value);
   }
+  authStore.newTransaction(amount.value, description.value);
   confirmationDialog.value = true;
   resetForm();
 };
@@ -181,6 +181,7 @@ const resetForm = () => {
   paymentDetails.value = '';
   amount.value = 0;
   internalShowModal.value = false;
+  description.value = '';
   emit('update:visible', false); 
 };
 
@@ -192,13 +193,13 @@ const closeModal = () => {
 
 const closeDialog = () => {
   confirmationDialog.value = false;
+  
 };
 
 const computedCvu = computed(() => (paymentMethod.value === 'cbu' ? paymentDetails.value : null));
 const computedLink = computed(() => (paymentMethod.value === 'link' ? paymentDetails.value : null));
 
 
-// Helper for amount limit based on balance
 const isAmountExceedingBalance = computed(() => {
   const availableBalance = authStore.currentUser?.balance || 0;
   return amount.value > availableBalance;
@@ -254,16 +255,8 @@ const formattedBalance = computed(() => {
   border-radius: 5px;
   margin: 20px;
 }
-.button-container {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 35px;
-}
-.error-message {
-  color: #ff4d4f;
-  font-size: 0.9rem;
-  margin-top: 5px;
-}
+
+
 @keyframes slide-up {
   from {
     transform: translateY(100%);
@@ -272,4 +265,18 @@ const formattedBalance = computed(() => {
     transform: translateY(0);
   }
 }
+
+.toggle-card-money-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0; /* Adjusts spacing */
+}
+
+.center-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 </style>

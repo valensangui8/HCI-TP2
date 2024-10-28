@@ -11,6 +11,7 @@
         :id="field.name"
         v-model="formData[field.name]"
         :placeholder="field.placeholder"
+        :maxlength="field.maxlength || null"
         required
       />
     </div>

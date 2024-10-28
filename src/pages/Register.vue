@@ -33,10 +33,10 @@ import AuthForm from '@/components/AuthForm.vue';
 import { useAuthStore } from '@/stores/authStore';
 
 const fields = ref([
-  { name: 'name', type: 'text', label: 'Nombre', placeholder: 'Ingresa tu nombre' },
-  { name: 'lastName', type: 'text', label: 'Apellido', placeholder: 'Ingresa tu apellido' },
-  { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' },
-  { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' },
+  { name: 'name', type: 'text', label: 'Nombre', placeholder: 'Ingresa tu nombre', maxLength: 50 },
+  { name: 'lastName', type: 'text', label: 'Apellido', placeholder: 'Ingresa tu apellido', maxLength: 50 },
+  { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' , maxLength: 100},
+  { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña', maxLength: 50 },
 ]);
 
 const authStore = useAuthStore();
