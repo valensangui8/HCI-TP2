@@ -2,7 +2,7 @@
   <div>
     <Header :simple="false" />
     <HeroSection />
-    <MiddleLanding />
+   
     <InfoSection />
   </div>
 </template>

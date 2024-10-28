@@ -73,12 +73,14 @@
 <script setup>
 import { ref } from 'vue';
 import { useUserCardsStore } from '@/stores/CardsStore';
-import { color } from 'chart.js/helpers';
+
+const isAddCardVisible = computed(() => currentCardIndex.value >= userCards.value.length);
 
 const props = defineProps({
   isVisible: Boolean,
 });
 const emit = defineEmits(['close']);
+
 
 const userCardsStore = useUserCardsStore();
 const newCard = ref({
@@ -155,6 +157,7 @@ const submitForm = () => {
     emit('close');
   }
 };
+
 
 const closeModal = () => {
   resetForm();
