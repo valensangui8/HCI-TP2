@@ -32,8 +32,8 @@ import { useAuthStore } from '@/stores/authStore';
 
 
 const fields = ref([
-  { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' },
-  { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' },
+  { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo', maxLength: 100 },
+  { name: 'password', type: 'password', label: 'Contraseña', placeholder: 'Ingresa tu contraseña' ,maxLength: 50},
 ]);
 
 const authStore = useAuthStore();

@@ -57,11 +57,10 @@ const toggleModal = () => {
 .credit-card-container {
   background-color: transparent;
   color: white;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 1vw;
+  border-radius: 1vw;
   position: relative;
-  width: 100%;
-  max-width: 350px;
+  max-width: 20vw;
   text-align: center;
 }
 
@@ -70,31 +69,32 @@ const toggleModal = () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 150px;
+  height: 15vw;
   background-color: #0A1A1A;
-  border-radius: 10px;
+  border-radius: 1vw;
 }
 
 .add-button {
   margin-top: auto;
-  background-color: #28a745;
+  background-color: #2da146;
   color: white;
   border: none;
-  font-size: 2.5rem;
-  width: 60px;
-  height: 60px;
+  font-size: 2vw;
+  width: 4vw;
+  height: 4vw;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0vw 3vw 4vw rgba(0, 0, 0, 0.3);
 }
 
 .add-card-text {
-  font-size: 1.2rem;
+  font-size: 0.8vw;
   color: #bbb;
-  margin-top: 10px;
+  margin-top: 0.4vw;
+  margin-bottom: 1vw;
 }
 
 .card-carousel {
@@ -105,11 +105,10 @@ const toggleModal = () => {
 }
 
 .card {
-  padding: 10px;
-  border-radius: 10px;
-  width: 100%;
-  max-width: 350px;
-  height: 160px;
+  padding: 0.8vw;
+  border-radius: 0.8vw;
+  height:11vw;
+  width: 25vw;
   text-align: center;
   position: relative;
   color: white;
@@ -125,37 +124,38 @@ const toggleModal = () => {
 }
 
 .bank-logo {
-  width: 40px;
+  width: 3vwvw;
   height: auto;
 }
 
 .card-number {
-  font-size: 1.2rem;
-  letter-spacing: 2px;
-  margin: 10px 0;
+  font-size: 1vw;
+  letter-spacing: 0.1vw;
+  margin: 1vw 0;
 }
 
 .card-footer {
   display: flex;
   justify-content: space-between;
-  font-size: 0.9rem;
+  margin-top:0.5vw;
+  font-size: 0.vw;
 }
 
 .nav-arrow {
   background: none;
   border: none;
   color: black;
-  font-size: 1.5rem;
+  font-size: 2.4vw;
   cursor: pointer;
 }
 
 .left-arrow {
   position: absolute;
-  left: -30px;
+  left: -0.8vw;
 }
 
 .right-arrow {
   position: absolute;
-  right: -30px;
+  right: -0.7vw;
 }
 </style>

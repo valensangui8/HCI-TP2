@@ -13,7 +13,7 @@
             type="number"
             label="Monto ($)"
             placeholder="Ingrese el monto"
-            prepend-icon="mdi-cash"
+            
             :rules="[value => !!value || 'El monto es obligatorio']"
             required
             class="input"

@@ -40,8 +40,8 @@
         color: white;
         padding: 1vw;
         border-radius: 10px;
-        height:8vw;
-        width: 16vw;
+        height:11vw;
+        width: 20vw;
         position: relative;
     }
     

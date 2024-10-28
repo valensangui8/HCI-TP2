@@ -27,9 +27,9 @@ import { ref } from 'vue';
 import AuthForm from '@/components/AuthForm.vue';
 
 const fields = ref([
-  { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' },
-  { name: 'newPassword', type: 'password', label: 'Nueva Contraseña', placeholder: 'Ingresa tu nueva contraseña' },
-  { name: 'confirmPassword', type: 'password', label: 'Confirmar Nueva Contraseña', placeholder: 'Confirma tu nueva contraseña' },
+  { name: 'email', type: 'email', label: 'Correo Electrónico', placeholder: 'Ingresa tu correo' , maxLength: 50},
+  { name: 'newPassword', type: 'password', label: 'Nueva Contraseña', placeholder: 'Ingresa tu nueva contraseña' , maxLength: 50},
+  { name: 'confirmPassword', type: 'password', label: 'Confirmar Nueva Contraseña', placeholder: 'Confirma tu nueva contraseña', maxLength: 50 },
 ]);
 
 const handleForgotPassword = (formData) => {

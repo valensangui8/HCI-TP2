@@ -31,9 +31,11 @@ declare module 'vue' {
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     OldBalanceCards: typeof import('./src/components/OldBalanceCards.vue')['default']
     OperationButton: typeof import('./src/components/OperationButton.vue')['default']
+    Payment: typeof import('./src/components/Payment.vue')['default']
     PaymentLinkModal: typeof import('./src/components/PaymentLinkModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Send: typeof import('./src/components/Send.vue')['default']
     SendModal: typeof import('./src/components/SendModal.vue')['default']
     TransactionHistory: typeof import('./src/components/TransactionHistory.vue')['default']
   }
