@@ -1,24 +1,19 @@
 <template>
   <div class="cards-page">
-    <!-- Navbar -->
     <Navbar />
 
-    <!-- Contenedor de Tarjetas -->
     <div class="cards-content">
       <h2>Mis Tarjetas</h2>
       <div class="cards-menu">
-        <!-- Opciones de Tarjetas -->
         <button @click="toggleModal" class="add-card-button">+ Agregar Tarjeta</button>
         <button v-if="cards.length > 0" @click="confirmDeleteCard" class="delete-card-button">Eliminar Tarjeta</button>
       </div>
 
-      <!-- Menú de tarjetas: muestra las tarjetas y el componente para agregar nueva tarjeta -->
       <div class="cards-list">
         <CreditCard ref="creditCardRef" />
       </div>
     </div>
 
-    <!-- Modal para agregar tarjeta -->
     <AddCardModal :isVisible="isModalVisible" @close="toggleModal" />
   </div>
 </template>
@@ -34,7 +29,6 @@ const userCardsStore = useUserCardsStore();
 const cards = computed(() => userCardsStore.cards);
 const isModalVisible = ref(false);
 
-// Referencia al componente CreditCard para obtener el índice de la tarjeta actual
 const creditCardRef = ref(null);
 
 const toggleModal = () => {

@@ -22,13 +22,14 @@ declare module 'vue' {
     InvestmentForm: typeof import('./src/components/InvestmentForm.vue')['default']
     InvestmentSummary: typeof import('./src/components/InvestmentSummary.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
+    OperationButton: typeof import('./src/components/OperationButton.vue')['default']
     Payment: typeof import('./src/components/Payment.vue')['default']
     PaymentLinkModal: typeof import('./src/components/PaymentLinkModal.vue')['default']
+    RecieverPayment: typeof import('./src/components/RecieverPayment.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Send: typeof import('./src/components/Send.vue')['default']
     SendModal: typeof import('./src/components/SendModal.vue')['default']
     TransactionHistory: typeof import('./src/components/TransactionHistory.vue')['default']
-    RecieverPayment: typeof import('./src/components/RecieverPayment.vue')['default']
   }
 }

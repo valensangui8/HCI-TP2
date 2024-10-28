@@ -6,7 +6,6 @@ import { useAuthStore } from './authStore';
 export const useUserCardsStore = defineStore('userCards', () => {
   const authStore = useAuthStore();
 
-  // Usar ref para permitir la modificación directa
   const cards = ref(authStore.currentUser?.cards || []);
 
   const updateCards = () => {
@@ -16,10 +15,10 @@ export const useUserCardsStore = defineStore('userCards', () => {
   function addCard(newCard) {
     if (authStore.currentUser) {
       if (!authStore.currentUser.cards) {
-        authStore.currentUser.cards = []; // Inicializa si está vacío
+        authStore.currentUser.cards = []; 
       }
       authStore.currentUser.cards.push(newCard);
-      authStore.saveToLocalStorage(); // Asegura guardar en localStorage después de agregar
+      authStore.saveToLocalStorage(); 
       updateCards();
     }
   }
@@ -27,7 +26,7 @@ export const useUserCardsStore = defineStore('userCards', () => {
   function removeCard(id) {
     if (authStore.currentUser) {
       authStore.currentUser.cards = authStore.currentUser.cards.filter(card => card.id !== id);
-      authStore.saveToLocalStorage(); // Asegura guardar en localStorage después de eliminar
+      authStore.saveToLocalStorage(); 
       updateCards();
     }
   }

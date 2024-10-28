@@ -1,16 +1,12 @@
 <template>
   <div class="dashboard-page">
-    <!-- Sidebar -->
-   
-
-    <!-- Main Content -->
+  
     <div class="main-content">
       <header>
         <h1>Vista General</h1>
         <p>Buenas tardes, <strong>James Bond</strong></p>
       </header>
 
-      <!-- Balance and Expenses Section -->
       <div class="balance-section">
         <div class="balance-card">
           <h3>Tu Balance</h3>
@@ -24,7 +20,6 @@
         </div>
       </div>
 
-      <!-- Operations Section -->
       <div class="operations-section">
         <router-link to="/deposit" class="operation-link">
           <div class="operation">

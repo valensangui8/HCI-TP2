@@ -26,7 +26,7 @@ const authStore = useAuthStore();
 
 const availableBalance = computed(() => authStore.currentUser?.balance || 0);
 const investedBalance = computed(() => authStore.currentUser?.investedBalance || 0);
-const netGains = computed(() => authStore.netGains); // Lee el valor reactivo directamente de authStore
+const netGains = computed(() => authStore.netGains); 
 const investedData = computed(() => authStore.currentUser?.investmentData || []);
 
 </script>

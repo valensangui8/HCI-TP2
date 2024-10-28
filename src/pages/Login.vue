@@ -8,7 +8,6 @@
         buttonText="Iniciar Sesión"
         @submit="handleLogin"
       >
-        <!-- Enlaces adicionales en el formulario -->
         <template #links>
           <div class="login-links">
             <router-link to="/register" class="register-link">¿No tenés cuenta? ¡Registrate!</router-link>
@@ -53,7 +52,6 @@ const handleLogin = (formData) => {
 </script>
 
 <style scoped>
-/* Estilos del componente */
 .login-page {
   display: flex;
   min-height: 100vh;

@@ -1,12 +1,10 @@
 <template>
     
-      <!-- Navbar (asumiendo que tienes un componente Navbar.vue) -->
       <Navbar />
       <div class="movimientos-page">
       <div class="content">
         <h1>Historial de Movimientos</h1>
   
-        <!-- Barra de búsqueda -->
         <div class="search-bar">
           <input 
             v-model="searchTerm" 
@@ -20,7 +18,6 @@
           </select>
         </div>
   
-        <!-- Componente TransactionHistory que muestra los movimientos filtrados -->
         <TransactionHistory :transactions="filteredTransactions" />
       </div>
     </div>
@@ -32,14 +29,11 @@
   import TransactionHistory from '@/components/TransactionHistory.vue';
   import { useTransactionStore } from '@/stores/transactions';
   
-  // Acceso a la store de transacciones
   const transactionStore = useTransactionStore();
   
-  // Filtro de búsqueda
   const searchTerm = ref('');
   const searchBy = ref('description');
   
-  // Filtrar transacciones según la búsqueda
   const filteredTransactions = computed(() => {
     if (!searchTerm.value) return transactionStore.transactions;
   

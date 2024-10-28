@@ -1,9 +1,7 @@
-// stores/authStore.js
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useAuthStore = defineStore('auth', () => {
-  // Datos iniciales de usuarios con balance invertido e historial de inversiones agregado
   const initialUsers = [
     {
       id: 1,
@@ -92,11 +90,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  // Métodos de balance e inversión
   const updateBalance = (amount) => {
     if (currentUser.value) {
       currentUser.value.balance = (currentUser.value.balance || 0) + amount;
-      saveToLocalStorage(); // Guardar cambios en el local storage
+      saveToLocalStorage(); 
     }
   };
 
@@ -115,7 +112,6 @@ export const useAuthStore = defineStore('auth', () => {
       currentUser.value.balance += amount;
       newTransaction(amount, 'Rescate de Inversión');
 
-      // Registrar en `investHistory` y `transactions`
       currentUser.value.investHistory.push({
         type: 'retiro',
         amount,
@@ -134,7 +130,6 @@ export const useAuthStore = defineStore('auth', () => {
 
   const newTransaction = (amount, description) => {
     if (currentUser.value) {
-      // Verifica y asegura que `transactions` esté inicializado
       if (!currentUser.value.transactions) {
         currentUser.value.transactions = [];
       }
@@ -156,10 +151,8 @@ export const useAuthStore = defineStore('auth', () => {
     );
   
     if (user) {
-      // Actualiza la contraseña en el usuario encontrado
       user.password = credentials.password;
   
-      // Guarda los cambios en localStorage
       saveToLocalStorage();
   
       return true;

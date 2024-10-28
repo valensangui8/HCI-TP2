@@ -7,7 +7,6 @@
             <div class="Urna">
               <div class="urna-header">
                 <h1 class="section-header"> Saldos </h1>
-                <!-- <p class="urna-description">¿Qué es mi Urna?</p> -->
               </div>
               <v-row>
                 <v-col cols="4">
@@ -103,7 +102,6 @@
     margin-bottom: 2vw;
 
   }
-  /* Styling for each row */
   .card-title, .op-item-title {
     text-align: center;
     margin-top: 1vw;
@@ -118,8 +116,8 @@
   
   .urna-header {
     display: flex;
-    align-items: center; /* Alinea verticalmente los elementos */
-    justify-content: flex-start; /* Alinea los elementos al inicio sin espacio extra */
+    align-items: center; 
+    justify-content: flex-start; 
   }
   
   .urna-description {
