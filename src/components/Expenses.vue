@@ -34,9 +34,9 @@
     color: white;
     padding: 1vw;
     border-radius: 10px;
-    margin-left:8vw;
-    height:11vw;
-    width: 20vw;
+    margin-left:10vw;
+    height:12vw;
+    width: 25vw;
     position: relative;
 }
 
@@ -46,14 +46,14 @@
 }
 
 .expenses-amount p {
-    font-size: 2vw;
-    margin-right: 10px;
+    font-size: 3vw;
+    margin-right: 0.8vw;
     flex-grow: 1;
 }
 
 .toggle-eye {
-  width: 2vw;
-  height: 2vw;
+  width: 3vw;
+  height: 3vw;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
 }
@@ -62,6 +62,6 @@
   transform: scale(1.2);
 }
 .responsive-header {
-  font-size: 1vw;
+  font-size: 1.1vw;
 }
 </style>

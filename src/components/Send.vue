@@ -29,6 +29,7 @@
     border-radius: 0.5vw;
     width: 9vw;
     height: 9vw;
+    margin-right:2vw;
     cursor: pointer;
   }
   

@@ -57,7 +57,6 @@ const toggleModal = () => {
 .credit-card-container {
   background-color: transparent;
   color: white;
-  padding: 1vw;
   border-radius: 1vw;
   position: relative;
   max-width: 20vw;
@@ -107,7 +106,7 @@ const toggleModal = () => {
 .card {
   padding: 0.8vw;
   border-radius: 0.8vw;
-  height:11vw;
+  height:12vw;
   width: 25vw;
   text-align: center;
   position: relative;
@@ -121,6 +120,7 @@ const toggleModal = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top:1vw;
 }
 
 .bank-logo {
