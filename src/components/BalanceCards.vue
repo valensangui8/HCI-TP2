@@ -107,12 +107,13 @@ const toggleExpenses = () => {
 // Computed balance and expenses formatting
 const formattedBalance = computed(() => {
   const balance = authStore.currentUser?.balance || 0;
-  return `$${balance.toFixed(2)}`;
+  return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(balance);
 });
+
 
 const formattedExpenses = computed(() => {
   const expenses = authStore.currentUser?.expenses || 0;
-  return `$${expenses.toLocaleString()}`;
+  return `$${expenses.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
 });
 
 // Control SendModal visibility
