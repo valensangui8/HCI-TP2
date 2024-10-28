@@ -58,9 +58,10 @@ const confirmationDialog = ref(false);
 const submitDeposit = () => {
   if (amount.value > 0) {
     authStore.updateBalance(amount.value);
+    authStore.newTransaction(amount.value, 'Deposito');
     confirmationDialog.value = true;
     closeModal();
-    authStore.newTransaction(amount.value, 'Deposito');
+    
   }
 
 };

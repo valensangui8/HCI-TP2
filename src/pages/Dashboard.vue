@@ -6,8 +6,8 @@
           <v-col cols="12" md="6">
             <div class="Urna">
               <div class="urna-header">
-                <h1 class="section-header">Tu Urna</h1>
-                <p class="urna-description">¿Qué es mi Urna?</p>
+                <h1 class="section-header">Balance</h1>
+                <!-- <p class="urna-description">¿Qué es mi Urna?</p> -->
               </div>
               <v-row>
                 <v-col cols="4">
@@ -72,7 +72,7 @@
           <v-col cols="12">
             <div class="movements-container">
               <h1 class="section-header">Historial de Movimientos</h1>
-              <TransactionHistory />
+              <TransactionHistory :transactions="transactions"/>
             </div>
           </v-col>
         </v-row>
