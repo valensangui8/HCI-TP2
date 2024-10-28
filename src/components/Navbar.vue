@@ -28,7 +28,7 @@ import { useAuthStore } from '@/stores/authStore';
 const authStore = useAuthStore();
 // Obtenemos el nombre del usuario actual
 const username = computed(() => authStore.currentUser?.name || 'Invitado');
-console.log(username.value);
+(username.value);
 </script>
 
 <style scoped>

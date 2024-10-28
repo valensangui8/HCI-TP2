@@ -29,6 +29,7 @@
 import { ref } from 'vue';
 import CreditCard from '@/components/CreditCard.vue';
 import { defineProps, defineEmits } from 'vue';
+import { useAuthStore } from '@/stores/authStore';
 
 const props = defineProps({
   visible: {
@@ -39,10 +40,14 @@ const props = defineProps({
 
 const emit = defineEmits(['close']);
 const amount = ref(0);
+const authStore = useAuthStore();
 
 const submitDeposit = () => {
-  amount.value = 0; 
-  closeModal();
+  if (amount.value > 0) {
+    authStore.updateBalance(amount.value); // Actualiza el balance en la store
+    amount.value = 0; 
+    closeModal();
+  }
 };
 
 const closeModal = () => {
