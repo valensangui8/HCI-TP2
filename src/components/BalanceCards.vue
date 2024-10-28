@@ -30,10 +30,7 @@
       </div>
     </div>
 
-     <!-- Operations Section -->
   <div class="operations">
-    <!-- Botón para abrir el modal de "Ingresar" -->
-      <!-- Botón para abrir el modal de "Ingresar" -->
       <div class="operation-link" @click="showDepositModal = true">
       <div class="operation">
         <img src="@/assets/ingresar-icon.png" alt="Ingresar" class="operation-icon">
@@ -41,11 +38,9 @@
       </div>
     </div>
 
-    <!-- Modal de Ingreso de Dinero -->
     <DepositModal :visible="showDepositModal" @close="showDepositModal = false" />
   
 
-    <!-- Botón para abrir el modal de "Cobrar" -->
     <div @click="toggleModal" class="operation-link">
       <div class="operation">
         <img src="@/assets/cobrar-icon.png" alt="Cobrar" class="operation-icon">
@@ -53,17 +48,14 @@
       </div>
     </div>
 
-    <!-- Modal para el enlace de pago -->
     <PaymentLinkModal :isVisible="isModalVisible" @close="toggleModal" />
 
-    <!-- Botón para abrir el modal de "Enviar" -->
     <div class="operation" @click="sendModalVisible = true">
       <img src="@/assets/enviar-icon.png" alt="Enviar" class="operation-icon">
       <p>Enviar</p>
     </div>
   </div>
 
-  <!-- Modales -->
   <DepositModal v-if="showDepositModal" @close="showDepositModal = false" />
   <SendModal v-model:visible="sendModalVisible" />
 </div>
