@@ -8,14 +8,10 @@
       <router-link to="/movements">Movimientos</router-link>
       <router-link to="/cards">Tus Tarjetas</router-link>
       <router-link to="/investments">Inversiones</router-link>
-      <router-link to="/settings">Configuración</router-link>
       <router-link to="/">Cerrar Sesión</router-link>
     </div>
     <div class="navbar-profile">
-      <router-link to="/profile">
         <span class="username">Hola, {{ username }}</span>
-        <img src="@/assets/profile-icon.png" alt="Profile Icon" />
-      </router-link>
     </div>
   </nav>
 </template>
